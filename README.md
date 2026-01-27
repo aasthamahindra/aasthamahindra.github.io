@@ -1,4 +1,4 @@
-# Aastha Mahindra - Personal Portfolio
+# Portfolio Website
 
 A high-performance, senior-level personal portfolio website built with React and Vite, featuring smooth animations and a modern, aesthetic design.
 
