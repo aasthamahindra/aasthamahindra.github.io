@@ -100,8 +100,20 @@ body {
 
 .works-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
   gap: var(--gap-md);
+}
+
+@media (min-width: 768px) {
+  .works-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .works-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .works-card {
@@ -110,6 +122,13 @@ body {
   flex-direction: column;
   justify-content: space-between;
   min-height: 260px;
+}
+
+@media (max-width: 768px) {
+  .works-card {
+    min-height: auto;
+    padding: 1.25rem;
+  }
 }
 
 .works-badge {
@@ -210,6 +229,7 @@ body {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
+/* Responsive button improvements */
 .btn {
   display: inline-block;
   padding: 12px 24px;
@@ -222,6 +242,26 @@ body {
   border: none;
   cursor: pointer;
   font-size: 16px;
+  min-height: 48px; /* Better touch target */
+  touch-action: manipulation; /* Improve touch responsiveness */
+}
+
+@media (max-width: 768px) {
+  .btn {
+    font-size: 16px; /* Prevent zoom on iOS */
+    padding: 14px 28px; /* Larger touch targets */
+  }
+}
+
+/* Better touch targets for mobile */
+@media (hover: none) and (pointer: coarse) {
+  .btn:hover {
+    transform: none; /* Remove hover effects on touch devices */
+  }
+  
+  .btn:active {
+    transform: scale(0.98);
+  }
 }
 
 .btn-primary {
@@ -350,6 +390,53 @@ body {
 
   .services-grid {
     grid-template-columns: 1fr !important;
+  }
+
+  /* Additional mobile utilities */
+  .hide-mobile {
+    display: none !important;
+  }
+  
+  .show-mobile {
+    display: block !important;
+  }
+
+  .text-center-mobile {
+    text-align: center !important;
+  }
+
+  .flex-col-mobile {
+    flex-direction: column !important;
+  }
+}
+
+/* Tablet specific styles */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .container {
+    max-width: 960px;
+  }
+  
+  .section {
+    scroll-margin-top: 94px;
+  }
+
+  .hide-tablet {
+    display: none !important;
+  }
+  
+  .show-tablet {
+    display: block !important;
+  }
+}
+
+/* Desktop specific styles */
+@media (min-width: 1024px) {
+  .hide-desktop {
+    display: none !important;
+  }
+  
+  .show-desktop {
+    display: block !important;
   }
 }
 

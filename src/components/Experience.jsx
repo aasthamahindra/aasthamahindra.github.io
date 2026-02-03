@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { sectionVariants, cardVariants, textRevealVariants, easings } from '../utils/animations';
 import SectionContainer from './SectionContainer';
 
 const Experience = ({ data }) => {
-  const [expandedIndex, setExpandedIndex] = useState(0); // First item expanded by default
+  const [expandedIndex, setExpandedIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const toggleExpanded = (index) => {
     setExpandedIndex(expandedIndex === index ? -1 : index);
@@ -45,7 +56,8 @@ const Experience = ({ data }) => {
                 display: 'flex',
                 marginBottom: index === (data?.experience || []).length - 1 ? '0' : 'var(--gap-md)',
                 position: 'relative',
-                alignItems: 'flex-start'
+                alignItems: 'flex-start',
+                flexDirection: 'row'
               }}
             >
               <motion.div
@@ -59,7 +71,7 @@ const Experience = ({ data }) => {
                 }}
                 style={{
                   position: 'absolute',
-                  left: '25px',
+                  left: isMobile ? '20px' : '25px',
                   top: index === 0 ? '30px' : '0',
                   bottom: index === (data?.experience || []).length - 1 ? '30px' : `calc(-1 * var(--gap-md))`,
                   width: '2px',
@@ -81,21 +93,22 @@ const Experience = ({ data }) => {
                   }
                 }}
                 style={{
-                  width: '50px',
-                  height: '50px',
+                  width: isMobile ? '40px' : '50px',
+                  height: isMobile ? '40px' : '50px',
                   borderRadius: '50%',
                   background: getCompanyColor(exp.company),
                   border: '3px solid white',
                   boxShadow: '0 6px 20px rgba(0,0,0,0.12)',
                   position: 'relative',
                   zIndex: 2,
-                  marginRight: 'var(--gap-md)',
+                  marginRight: isMobile ? '1rem' : 'var(--gap-md)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   color: 'white',
                   fontWeight: 'bold',
-                  fontSize: '1rem'
+                  fontSize: isMobile ? '0.9rem' : '1rem',
+                  flexShrink: 0
                 }}
               >
                 {(exp.company || 'C').charAt(0)}
@@ -105,35 +118,44 @@ const Experience = ({ data }) => {
                 className="timeline-content glass-card"
                 variants={cardVariants}
                 whileHover={{ 
-                  x: 15,
+                  x: isMobile ? 0 : 15,
                   scale: 1.01,
                   boxShadow: 'var(--hover-shadow)'
                 }}
                 transition={{ duration: 0.4, ease: [0.6, -0.05, 0.01, 0.99] }}
                 style={{
                   flex: 1,
-                  padding: 'var(--card-padding)',
-                  position: 'relative'
+                  padding: isMobile ? '1.25rem' : 'var(--card-padding)',
+                  position: 'relative',
+                  minWidth: 0
                 }}
               >
-                <div
-                  style={{
-                    position: 'absolute',
-                    left: '-12px',
-                    top: '25px',
-                    width: '0',
-                    height: '0',
-                    borderTop: '12px solid transparent',
-                    borderBottom: '12px solid transparent',
-                    borderRight: `12px solid ${getCompanyColor(exp.company)}30`
-                  }}
-                />
+                {!isMobile && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      left: '-12px',
+                      top: '25px',
+                      width: '0',
+                      height: '0',
+                      borderTop: '12px solid transparent',
+                      borderBottom: '12px solid transparent',
+                      borderRight: `12px solid ${getCompanyColor(exp.company)}30`
+                    }}
+                  />
+                )}
                 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--gap-sm)' }}>
-                  <div>
+                <div style={{ 
+                  display: 'flex', 
+                  justifyContent: 'space-between', 
+                  alignItems: isMobile ? 'flex-start' : 'flex-start', 
+                  marginBottom: 'var(--gap-sm)',
+                  flexDirection: isMobile ? 'column' : 'row'
+                }}>
+                  <div style={{ marginBottom: isMobile ? 'var(--gap-sm)' : '0' }}>
                     <h3 
                       style={{ 
-                        fontSize: '1.3rem',
+                        fontSize: isMobile ? '1.2rem' : '1.3rem',
                         fontWeight: '600',
                         color: getCompanyColor(exp.company),
                         marginBottom: '0.5rem',
@@ -144,7 +166,7 @@ const Experience = ({ data }) => {
                     </h3>
                     <h4 
                       style={{ 
-                        fontSize: '1.1rem',
+                        fontSize: isMobile ? '1rem' : '1.1rem',
                         fontWeight: '500',
                         color: 'var(--text-secondary)',
                         marginBottom: '0.5rem'
@@ -165,19 +187,25 @@ const Experience = ({ data }) => {
                       padding: '0.5rem 1rem',
                       background: `${getCompanyColor(exp.company)}15`,
                       borderRadius: '20px',
-                      fontSize: '0.9rem',
+                      fontSize: isMobile ? '0.85rem' : '0.9rem',
                       color: getCompanyColor(exp.company),
                       fontWeight: '500',
                       whiteSpace: 'nowrap',
                       backdropFilter: 'blur(10px)',
-                      border: `1px solid ${getCompanyColor(exp.company)}30`
+                      border: `1px solid ${getCompanyColor(exp.company)}30`,
+                      alignSelf: isMobile ? 'flex-start' : 'center'
                     }}
                   >
                     {exp.period}
                   </motion.div>
                 </div>
 
-                <ul style={{ marginTop: 'var(--gap-sm)', paddingLeft: '1.1rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                <ul style={{ 
+                  marginTop: 'var(--gap-sm)', 
+                  paddingLeft: '1.1rem', 
+                  color: 'var(--text-secondary)', 
+                  lineHeight: 1.6 
+                }}>
                   <AnimatePresence>
                     {(expandedIndex === index ? exp.bullets : exp.bullets.slice(0, 2)).map((bullet, bulletIndex) => (
                       <motion.li
@@ -210,7 +238,7 @@ const Experience = ({ data }) => {
                       background: `${getCompanyColor(exp.company)}15`,
                       border: `1px solid ${getCompanyColor(exp.company)}30`,
                       borderRadius: '20px',
-                      fontSize: '0.85rem',
+                      fontSize: isMobile ? '0.8rem' : '0.85rem',
                       color: getCompanyColor(exp.company),
                       fontWeight: '500',
                       cursor: 'pointer',

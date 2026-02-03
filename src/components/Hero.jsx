@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { heroVariants, textRevealVariants, cardVariants } from '../utils/animations';
 import profile from '../assets/profile.png';
 
 const Hero = ({ data }) => {
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const cards = data?.about?.cards || [];
   const focusItems = data?.focusItems || cards;
   const roleLabel = data?.hero?.roleTop || data?.title || '';
@@ -67,29 +81,36 @@ const Hero = ({ data }) => {
             </h1>
           </motion.div>
 
-          {/* MAIN 3 COLUMN GRID */}
+          {/* MAIN RESPONSIVE GRID */}
           <motion.div
             variants={cardVariants}
             style={{
               display: 'grid',
-              gridTemplateColumns: '1fr 1fr 1fr',
-              gap: 'var(--gap-lg)',
+              gridTemplateColumns: isMobile 
+                ? '1fr' 
+                : isTablet 
+                  ? '1fr 1fr' 
+                  : '1fr 1fr 1fr',
+              gap: isMobile ? 'var(--gap-md)' : 'var(--gap-lg)',
               alignItems: 'stretch',
               width: '100%',
             }}
           >
             {/* COLUMN 1 – ABOUT TEXT */}
-            <motion.div variants={textRevealVariants}>
+            <motion.div variants={textRevealVariants} style={{
+              gridColumn: isMobile ? '1' : isTablet ? '1 / -1' : '1',
+              order: isMobile ? 2 : 1
+            }}>
               <div
                 className="glass-card"
                 style={{
-                  padding: '1.5rem',
+                  padding: isMobile ? '1.25rem' : '1.5rem',
                   borderRadius: '16px',
                 }}
               >
                 <p
                   style={{
-                    fontSize: '1rem',
+                    fontSize: isMobile ? '0.95rem' : '1rem',
                     fontWeight: '400',
                     lineHeight: 1.6,
                     color: 'var(--text-secondary)',
@@ -104,12 +125,17 @@ const Hero = ({ data }) => {
             {/* COLUMN 2 – IMAGE */}
             <motion.div
               variants={textRevealVariants}
-              style={{ display: 'flex', justifyContent: 'center' }}
+              style={{ 
+                display: 'flex', 
+                justifyContent: 'center',
+                order: isMobile ? 1 : 2,
+                gridColumn: isMobile ? '1' : isTablet ? '1 / -1' : '2'
+              }}
             >
               <motion.div
                 style={{
-                  width: '400px',
-                  height: '400px',
+                  width: isMobile ? '280px' : isTablet ? '350px' : '400px',
+                  height: isMobile ? '280px' : isTablet ? '350px' : '400px',
                   borderRadius: '16px',
                   overflow: 'hidden',
                   boxShadow: '0 15px 30px rgba(0,0,0,0.15)',
@@ -135,11 +161,13 @@ const Hero = ({ data }) => {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '0.6rem',
+                order: isMobile ? 3 : 3,
+                gridColumn: isMobile ? '1' : isTablet ? '1 / -1' : '3'
               }}
             >
               <h2
                 style={{
-                  fontSize: '1.6rem',
+                  fontSize: isMobile ? '1.3rem' : '1.6rem',
                   color: 'var(--dusty-rose)',
                   marginBottom: '0.3rem',
                   fontWeight: '700',
@@ -155,7 +183,7 @@ const Hero = ({ data }) => {
                   key={index}
                   className="glass-card"
                   style={{
-                    padding: '1rem 1.2rem',
+                    padding: isMobile ? '0.8rem 1rem' : '1rem 1.2rem',
                     marginBottom: '0.1rem',
                     lineHeight: 1.4,
                     background: 'rgba(255, 255, 255, 0.1)',
@@ -178,11 +206,11 @@ const Hero = ({ data }) => {
               <motion.button
                 className="glass-card"
                 style={{
-                  padding: '1rem 2rem',
+                  padding: isMobile ? '0.8rem 1.5rem' : '1rem 2rem',
                   borderRadius: '16px',
                   backdropFilter: 'blur(20px)',
                   color: '#1f2d3d',
-                  fontSize: '1rem',
+                  fontSize: isMobile ? '0.9rem' : '1rem',
                   fontWeight: '600',
                   cursor: 'pointer',
                   textAlign: 'center',

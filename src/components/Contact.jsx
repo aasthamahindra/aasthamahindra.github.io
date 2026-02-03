@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { sectionVariants, cardVariants, textRevealVariants } from '../utils/animations';
 import SectionContainer from './SectionContainer';
@@ -11,6 +11,17 @@ const Contact = ({ data }) => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState('');
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -51,19 +62,22 @@ const Contact = ({ data }) => {
           variants={cardVariants}
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: 'var(--gap-lg)',
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: isMobile ? 'var(--gap-md)' : 'var(--gap-lg)',
             marginTop: 'var(--gap-lg)'
           }}
         >
           <motion.div
             className="contact-info glass-card"
             variants={cardVariants}
-            style={{ padding: 'var(--card-padding)' }}
+            style={{ 
+              padding: isMobile ? '1.5rem' : 'var(--card-padding)',
+              gridColumn: isMobile ? '1' : '1 / -1'
+            }}
           >
             <h3 
               style={{ 
-                fontSize: '1.5rem',
+                fontSize: isMobile ? '1.3rem' : '1.5rem',
                 fontWeight: '600',
                 marginBottom: 'var(--gap-md)',
                 color: 'var(--dusty-rose)'
@@ -75,26 +89,35 @@ const Contact = ({ data }) => {
               className="text-secondary" 
               style={{ 
                 lineHeight: 1.6,
-                fontSize: '1.1rem'
+                fontSize: isMobile ? '1rem' : '1.1rem'
               }}
             >
               {data?.contact?.blurb || ''}
             </p>
 
-            <p className="text-secondary" style={{ lineHeight: 1.6, marginBottom: 'var(--gap-md)' }}>
+            <p className="text-secondary" style={{ 
+              lineHeight: 1.6, 
+              marginBottom: 'var(--gap-md)',
+              fontSize: isMobile ? '1rem' : '1.1rem'
+            }}>
               If you're hiring for backend roles or want to collaborate, send a note — I reply quickly.
             </p>
             
-            <div style={{ display: 'grid', gap: 'var(--gap-md)' }}>
+            <div style={{ 
+              display: 'grid', 
+              gap: 'var(--gap-md)',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(200px, 1fr))'
+            }}>
               <div>
-                <strong style={{ color: 'var(--text-primary)' }}>Email:</strong>
+                <strong style={{ color: 'var(--text-primary)', fontSize: isMobile ? '0.95rem' : '1rem' }}>Email:</strong>
                 <div>
                   <a 
                     href={`mailto:${data?.email || ''}`}
                     style={{
                       color: 'var(--dusty-rose)',
                       textDecoration: 'none',
-                      fontSize: '1.1rem'
+                      fontSize: isMobile ? '1rem' : '1.1rem',
+                      wordBreak: 'break-word'
                     }}
                   >
                     {data?.email || ''}
@@ -103,7 +126,7 @@ const Contact = ({ data }) => {
               </div>
               
               <div>
-                <strong style={{ color: 'var(--text-primary)' }}>Location:</strong>
+                <strong style={{ color: 'var(--text-primary)', fontSize: isMobile ? '0.95rem' : '1rem' }}>Location:</strong>
                 <div>
                   <a 
                     href={data?.locationLink}
@@ -112,7 +135,8 @@ const Contact = ({ data }) => {
                     style={{
                       color: 'var(--sage-green)',
                       textDecoration: 'none',
-                      fontSize: '1.1rem'
+                      fontSize: isMobile ? '1rem' : '1.1rem',
+                      wordBreak: 'break-word'
                     }}
                   >
                     {data?.location || ''}
