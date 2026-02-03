@@ -1,10 +1,14 @@
+import boxfit from '../assets/boxfit.png';
+import certificate from '../assets/certificate.png';
+import resume from '../assets/resume.pdf';
+
 const PORTFOLIO_DATA = {
   name: 'Aastha Mahindra',
   title: 'Software Engineer',
   email: 'aastha.mahindra125@gmail.com',
   location: 'Bangalore, India',
   locationLink: 'https://maps.app.goo.gl/v4SUbvBY23pUKREv9',
-  resumeLink: 'https://aasthamahindra.github.io/assets/Aastha_Mahindra_Resume.pdf',
+  resumeLink: resume,
 
   hero: {
     roleTop: 'Software Engineer',
@@ -14,11 +18,14 @@ const PORTFOLIO_DATA = {
   },
 
   about: {
-    summary: `Hey there! I am Aastha Mahindra, living by the mantra 'You only live once', embraces my joyful existence. A book lover at heart, I lose myself in captivating stories, cherishing the wisdom within. Tech advancements excites me, igniting a passion for progress and innovation. With a thirst for knowledge, a love for literature, and a fascination for technology, I find joy in the simple pleasures that make life extraordinary.\n\nCommitted to best practices, I ensure the functionality and user-friendliness of applications. My goal is to convey your message and identity through creative solutions for the backend.`,
-    cards: [
-      { label: 'Focus', value: '‣ Scalable APIs & system design\n‣ Data platforms & SDK development\n‣ Full-stack feature delivery' },
-    ]
+    summary: "Hey there! I am Aastha Mahindra, living by the mantra 'You only live once', embraces my joyful existence. A book lover at heart, I lose myself in captivating stories, cherishing the wisdom within.\n\nI design scalable and reliable backend systems with a focus on clean architecture and performance.\n\nBeyond writing code, I enjoy breaking down complex problems and building structured solutions. My goal is to deliver thoughtful engineering that solves real-world challenges."
   },
+
+  focusItems: [
+    "Backend Architecture & System Design",
+    "API Performance & Database Optimization",
+    "Building Secure and Scalable Applications"
+  ],
 
   services: [
     {
@@ -37,14 +44,16 @@ const PORTFOLIO_DATA = {
       impact: 'Automated certificate generation to reduce manual effort and improve consistency.',
       technologies: ['Python'],
       github: 'https://github.com/aasthamahindra/certificate-generator.git',
-      live: ''
+      live: '',
+      image: certificate
     },
     {
       title: 'Boxfit',
       impact: 'A fitness web experience focused on clean UX and simple workflows.',
       technologies: ['JavaScript'],
       github: 'https://github.com/aasthamahindra/boxfit.git',
-      live: ''
+      live: '',
+      image: boxfit
     }
   ],
 
@@ -94,10 +103,5 @@ const PORTFOLIO_DATA = {
   }
 };
 
-export const getPortfolioData = () => {
-  return Promise.resolve(PORTFOLIO_DATA);
-};
-
-export const getSectionData = (section) => {
-  return Promise.resolve(PORTFOLIO_DATA[section] || null);
-};
+export const getPortfolioData = () => Promise.resolve(PORTFOLIO_DATA);
+export const getSectionData = (section) => Promise.resolve(PORTFOLIO_DATA[section] || null);

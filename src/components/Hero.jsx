@@ -1,23 +1,27 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { heroVariants, textRevealVariants, magneticHover, cardVariants } from '../utils/animations';
+import { heroVariants, textRevealVariants, cardVariants } from '../utils/animations';
 import profile from '../assets/profile.png';
 
 const Hero = ({ data }) => {
   const cards = data?.about?.cards || [];
+  const focusItems = data?.focusItems || cards;
   const roleLabel = data?.hero?.roleTop || data?.title || '';
   const name = data?.hero?.headline || data?.name || '';
-  const valueProp = data?.hero?.intro || '';
   const summary = data?.about?.summary || '';
+  const resumeLink = data?.resumeLink || '';
 
   return (
-    <>
-    <section className="section hero" id="hero" style={{
-      paddingTop: 'calc(var(--section-padding) + 48px)',
-      minHeight: '90vh',
-      display: 'flex',
-      alignItems: 'center'
-    }}>
+    <section
+      className="section hero"
+      id="hero"
+      style={{
+        paddingTop: 'calc(var(--section-padding) + 48px)',
+        minHeight: '90vh',
+        display: 'flex',
+        alignItems: 'center',
+      }}
+    >
       <div className="container">
         <motion.div
           className="hero-grid"
@@ -28,83 +32,87 @@ const Hero = ({ data }) => {
             display: 'flex',
             flexDirection: 'column',
             gap: 'var(--gap-xl)',
-            width: '100%'
+            width: '100%',
           }}
         >
-          {/* Top Row - Name spanning full width, aligned with navbar */}
-          <motion.div variants={textRevealVariants} style={{ textAlign: 'center', marginBottom: 'var(--gap-xl)' }}>
-            <div className="hero-kicker" style={{
-              fontSize: '1rem',
-              color: 'var(--dusty-rose)',
-              fontWeight: '500',
-              marginBottom: 'var(--gap-sm)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em'
-            }}>
+          {/* HEADER */}
+          <motion.div
+            variants={textRevealVariants}
+            style={{ textAlign: 'center', marginBottom: 'var(--gap-xl)' }}
+          >
+            <div
+              style={{
+                fontSize: '1rem',
+                color: 'var(--dusty-rose)',
+                fontWeight: '500',
+                marginBottom: 'var(--gap-sm)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
+              }}
+            >
               {roleLabel}
             </div>
-            <h1 className="hero-name" style={{
-              fontSize: 'clamp(4rem, 12vw, 8rem)',
-              fontWeight: '900',
-              lineHeight: '0.8',
-              marginBottom: 'var(--gap-md)',
-              color: 'var(--text-primary)',
-              letterSpacing: '-0.04em'
-            }}>
+
+            <h1
+              style={{
+                fontSize: 'clamp(4rem, 12vw, 8rem)',
+                fontWeight: '900',
+                lineHeight: '0.8',
+                marginBottom: 'var(--gap-md)',
+                color: 'var(--text-primary)',
+                letterSpacing: '-0.04em',
+              }}
+            >
               {name}
             </h1>
           </motion.div>
 
-          {/* Bottom Row - Three Column Grid with equal height */}
+          {/* MAIN 3 COLUMN GRID */}
           <motion.div
             variants={cardVariants}
             style={{
               display: 'grid',
-              gridTemplateColumns: '1fr 0.8fr 1.2fr',
+              gridTemplateColumns: '1fr 1fr 1fr',
               gap: 'var(--gap-lg)',
               alignItems: 'stretch',
-              width: '100%'
+              width: '100%',
             }}
           >
-            {/* First Column - Focus and Interests */}
-            <motion.div variants={textRevealVariants} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--gap-md)' }}>
-              {cards.map((card) => (
-                <motion.div
-                  key={card.label}
-                  className="glass-card"
+            {/* COLUMN 1 – ABOUT TEXT */}
+            <motion.div variants={textRevealVariants}>
+              <div
+                className="glass-card"
+                style={{
+                  padding: '1.5rem',
+                  borderRadius: '16px',
+                }}
+              >
+                <p
                   style={{
-                    padding: '1.5rem',
-                    borderRadius: '16px',
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    backdropFilter: 'blur(20px)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    flex: 1
+                    fontSize: '1rem',
+                    fontWeight: '400',
+                    lineHeight: 1.6,
+                    color: 'var(--text-secondary)',
+                    margin: 0,
                   }}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.2 }}
                 >
-                  <div style={{ fontSize: '0.85rem', color: 'var(--dusty-rose)', marginBottom: '0.8rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                    {card.label}
-                  </div>
-                  <div style={{ fontSize: '1rem', fontWeight: 500, color: 'var(--text-primary)', whiteSpace: 'pre-line', lineHeight: 1.6 }}>
-                    {card.value}
-                  </div>
-                </motion.div>
-              ))}
+                  {summary}
+                </p>
+              </div>
             </motion.div>
 
-            {/* Middle Column - Small Image */}
-            <motion.div variants={textRevealVariants} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            {/* COLUMN 2 – IMAGE */}
+            <motion.div
+              variants={textRevealVariants}
+              style={{ display: 'flex', justifyContent: 'center' }}
+            >
               <motion.div
-                className="hero-avatar-small"
                 style={{
                   width: '400px',
                   height: '400px',
                   borderRadius: '16px',
                   overflow: 'hidden',
                   boxShadow: '0 15px 30px rgba(0,0,0,0.15)',
-                  position: 'relative',
-                  alignSelf: 'center'
                 }}
                 whileHover={{ scale: 1.05 }}
               >
@@ -114,42 +122,90 @@ const Hero = ({ data }) => {
                   style={{
                     width: '100%',
                     height: '100%',
-                    objectFit: 'cover'
+                    objectFit: 'cover',
                   }}
                 />
               </motion.div>
             </motion.div>
 
-            {/* Last Column - About Paragraph */}
-            <motion.div variants={textRevealVariants} style={{ display: 'flex', flexDirection: 'column' }}>
-              <div className="glass-card" style={{
-                padding: '1.5rem',
-                borderRadius: '16px',
-                background: 'rgba(255, 255, 255, 0.1)',
-                backdropFilter: 'blur(20px)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                flex: 1,
+            {/* COLUMN 3 – FOCUS */}
+            <motion.div
+              variants={textRevealVariants}
+              style={{
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center'
-              }}>
-                <p style={{
+                gap: '0.6rem',
+              }}
+            >
+              <h2
+                style={{
+                  fontSize: '1.6rem',
+                  color: 'var(--dusty-rose)',
+                  marginBottom: '0.3rem',
+                  fontWeight: '700',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.08em',
+                }}
+              >
+                FOCUS
+              </h2>
+
+              {focusItems.map((item, index) => (
+                <motion.div
+                  key={index}
+                  className="glass-card"
+                  style={{
+                    padding: '1rem 1.2rem',
+                    marginBottom: '0.1rem',
+                    lineHeight: 1.4,
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    backdropFilter: 'blur(20px)',
+                  }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.2 }}
+                  whileHover={{
+                    scale: 1.03,
+                    background:
+                      'linear-gradient(135deg, var(--warm-beige) 0%, var(--soft-white) 50%, var(--dusty-rose) 100%)',
+                  }}
+                >
+                  {item.startsWith('‣') ? item : `‣ ${item}`}
+                </motion.div>
+              ))}
+
+              {/* RESUME BUTTON */}
+              <motion.button
+                className="glass-card"
+                style={{
+                  padding: '1rem 2rem',
+                  borderRadius: '16px',
+                  backdropFilter: 'blur(20px)',
+                  color: '#1f2d3d',
                   fontSize: '1rem',
-                  fontWeight: '400',
-                  lineHeight: 1.6,
-                  color: 'var(--text-secondary)',
-                  margin: 0,
-                  whiteSpace: 'pre-line'
-                }}>
-                  {summary}
-                </p>
-              </div>
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  textAlign: 'center',
+                  marginTop: '0.5rem',
+                  borderColor: 'var(--dusty-rose)',
+                  backgroundImage:
+                    'linear-gradient(135deg, var(--dusty-rose) 0%, var(--soft-white) 50%, var(--warm-beige) 100%)',
+                }}
+                whileHover={{
+                  scale: 1.05,
+                  backgroundImage:
+                    'linear-gradient(135deg, var(--warm-beige) 0%, var(--soft-white) 50%, var(--dusty-rose) 100%)',
+                  color: '#1f2d3d',
+                }}
+                onClick={() => window.open(resumeLink, '_blank')}
+              >
+                VIEW RESUME
+              </motion.button>
             </motion.div>
           </motion.div>
         </motion.div>
       </div>
     </section>
-    </>
   );
 };
 

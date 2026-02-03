@@ -2,6 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { sectionVariants, cardVariants, textRevealVariants } from '../utils/animations';
 import SectionContainer from './SectionContainer';
+import { FaGithub } from "react-icons/fa";
+
 
 const Works = ({ data }) => {
   const projects = data?.projects || [];
@@ -22,8 +24,7 @@ const Works = ({ data }) => {
   const getTechColor = (tech) => {
     const colors = {
       Python: 'var(--sage-green)',
-      Javascript: 'var(--dusty-rose)',
-      JavaScript: 'var(--dusty-rose)',
+      JavaScript: 'var(--sage-green)',
       Node: 'var(--dusty-rose)',
       'Node.js': 'var(--dusty-rose)'
     };
@@ -55,12 +56,32 @@ const Works = ({ data }) => {
                 transition={{ duration: 0.25, ease: [0.6, -0.05, 0.01, 0.99] }}
               >
                 <div>
-                  <div
-                    className="works-badge"
-                    style={{ background: accent }}
-                  >
-                    {(project?.title || 'P').charAt(0)}
-                  </div>
+                <div
+                  className="works-badge"
+                  style={{
+                    background: 'rgba(255,255,255,0.2)',
+                    overflow: 'hidden',
+                    padding: project?.image ? '0' : '8px',
+                    width: '180px',
+                    height: '100px',
+                    borderRadius: '12px',
+                    marginBottom: '12px'
+                  }}
+                >
+                  {project?.image ? (
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover'
+                      }}
+                    />
+                  ) : (
+                    (project?.title || 'P').charAt(0)
+                  )}
+                </div>
 
                   <div className="works-meta">Project</div>
                   <h3 className="works-title">{project?.title || 'Project'}</h3>
@@ -86,9 +107,16 @@ const Works = ({ data }) => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn btn-ghost"
+                      style={{
+                        borderColor: 'var(--dusty-rose)',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.5rem'
+                      }}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
+                      <FaGithub size={18} />
                       GitHub
                     </motion.a>
                   ) : null}
