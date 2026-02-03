@@ -14,10 +14,9 @@ const PORTFOLIO_DATA = {
   },
 
   about: {
-    summary: "Hey, I'm Aastha — a software engineer building scalable, data-driven products in climate tech. I have a love for books, learning, and building meaningful tech. I enjoy crafting reliable APIs and SDKs using JavaScript and Python, and working on climate-tech solutions involving spatial indexing and large-scale data processing.\n\nI've worked with MongoDB, MQTT, and cloud services, and I care deeply about clean architecture, best practices, and building systems that are both robust and user-friendly. My goal is to create backend solutions that clearly support real-world impact.",
+    summary: `Hey there! I am Aastha Mahindra, living by the mantra 'You only live once', embraces my joyful existence. A book lover at heart, I lose myself in captivating stories, cherishing the wisdom within. Tech advancements excites me, igniting a passion for progress and innovation. With a thirst for knowledge, a love for literature, and a fascination for technology, I find joy in the simple pleasures that make life extraordinary.\n\nCommitted to best practices, I ensure the functionality and user-friendliness of applications. My goal is to convey your message and identity through creative solutions for the backend.`,
     cards: [
-      { label: 'Focus', value: '- Scalable APIs & system design\n- Data platforms & SDK development\n- Full-stack feature delivery' },
-      { label: 'Interests', value: '- Sustainability & climate tech\n- Distributed systems & reliability\n- Product engineering & developer experience' }
+      { label: 'Focus', value: '‣ Scalable APIs & system design\n‣ Data platforms & SDK development\n‣ Full-stack feature delivery' },
     ]
   },
 
