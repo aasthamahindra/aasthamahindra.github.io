@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { heroVariants, textRevealVariants, magneticHover, cardVariants } from '../utils/animations';
+import profile from '../assets/profile.png';
 
 const Hero = ({ data }) => {
   const cards = data?.about?.cards || [];
@@ -8,10 +9,10 @@ const Hero = ({ data }) => {
   const name = data?.hero?.headline || data?.name || '';
   const valueProp = data?.hero?.intro || '';
   const summary = data?.about?.summary || '';
-  
+
   return (
     <>
-    <section className="section hero" id="hero" style={{ 
+    <section className="section hero" id="hero" style={{
       paddingTop: 'calc(var(--section-padding) + 48px)',
       minHeight: '90vh',
       display: 'flex',
@@ -32,8 +33,8 @@ const Hero = ({ data }) => {
         >
           {/* Top Row - Name spanning full width, aligned with navbar */}
           <motion.div variants={textRevealVariants} style={{ textAlign: 'center', marginBottom: 'var(--gap-xl)' }}>
-            <div className="hero-kicker" style={{ 
-              fontSize: '1rem', 
+            <div className="hero-kicker" style={{
+              fontSize: '1rem',
               color: 'var(--dusty-rose)',
               fontWeight: '500',
               marginBottom: 'var(--gap-sm)',
@@ -42,7 +43,7 @@ const Hero = ({ data }) => {
             }}>
               {roleLabel}
             </div>
-            <h1 className="hero-name" style={{ 
+            <h1 className="hero-name" style={{
               fontSize: 'clamp(4rem, 12vw, 8rem)',
               fontWeight: '900',
               lineHeight: '0.8',
@@ -55,7 +56,7 @@ const Hero = ({ data }) => {
           </motion.div>
 
           {/* Bottom Row - Three Column Grid with equal height */}
-          <motion.div 
+          <motion.div
             variants={cardVariants}
             style={{
               display: 'grid',
@@ -71,7 +72,7 @@ const Hero = ({ data }) => {
                 <motion.div
                   key={card.label}
                   className="glass-card"
-                  style={{ 
+                  style={{
                     padding: '1.5rem',
                     borderRadius: '16px',
                     background: 'rgba(255, 255, 255, 0.1)',
@@ -94,7 +95,7 @@ const Hero = ({ data }) => {
 
             {/* Middle Column - Small Image */}
             <motion.div variants={textRevealVariants} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <motion.div 
+              <motion.div
                 className="hero-avatar-small"
                 style={{
                   width: '400px',
@@ -107,8 +108,8 @@ const Hero = ({ data }) => {
                 }}
                 whileHover={{ scale: 1.05 }}
               >
-                <img 
-                  src="/src/assets/profile.png" 
+                <img
+                  src={profile}
                   alt="Aastha Mahindra"
                   style={{
                     width: '100%',
@@ -121,7 +122,7 @@ const Hero = ({ data }) => {
 
             {/* Last Column - About Paragraph */}
             <motion.div variants={textRevealVariants} style={{ display: 'flex', flexDirection: 'column' }}>
-              <div className="glass-card" style={{ 
+              <div className="glass-card" style={{
                 padding: '1.5rem',
                 borderRadius: '16px',
                 background: 'rgba(255, 255, 255, 0.1)',
@@ -132,9 +133,9 @@ const Hero = ({ data }) => {
                 flexDirection: 'column',
                 justifyContent: 'center'
               }}>
-                <p style={{ 
-                  fontSize: '1rem', 
-                  fontWeight: '400', 
+                <p style={{
+                  fontSize: '1rem',
+                  fontWeight: '400',
                   lineHeight: 1.6,
                   color: 'var(--text-secondary)',
                   margin: 0,
