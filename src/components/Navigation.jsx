@@ -11,6 +11,7 @@ const Navigation = () => {
     { id: 'hero', label: 'About' },
     { id: 'experience', label: 'Experience' },
     { id: 'works', label: 'Works' },
+    { id: 'blogs', label: 'Blogs' },
     { id: 'services', label: 'Services' },
     { id: 'contact', label: 'Contact' }
   ];
@@ -160,6 +161,7 @@ const Navigation = () => {
             {activeSection === 'hero' && 'About'}
             {activeSection === 'experience' && 'Experience'}
             {activeSection === 'works' && 'Works'}
+            {activeSection === 'blogs' && 'Blogs'}
             {activeSection === 'services' && 'Services'}
             {activeSection === 'contact' && 'Contact'}
           </div>

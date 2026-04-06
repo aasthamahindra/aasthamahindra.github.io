@@ -1,5 +1,8 @@
 import boxfit from '../assets/boxfit.png';
 import certificate from '../assets/certificate.png';
+import mongodb from '../assets/mongodb.png';
+import techjourney from '../assets/techjourney.png';
+import graphql from '../assets/graphql.png';
 import resume from '../assets/resume.pdf';
 
 const PORTFOLIO_DATA = {
@@ -54,6 +57,29 @@ const PORTFOLIO_DATA = {
       github: 'https://github.com/aasthamahindra/boxfit.git',
       live: '',
       image: boxfit
+    }
+  ],
+
+  blogs: [
+    {
+      title: 'Optimizing MongoDB for Real-Time Climate APIs',
+      link: 'https://www.getambee.com/blogs/optimizing-mongodb-for-real-time-climate-apis',
+      image: mongodb,
+    },
+    {
+      title: "Inspiring growth: Aastha's tech journey at Ambee",
+      link: 'https://www.getambee.com/blogs/aastha-tech-journey',
+      image: techjourney,
+    },
+    {
+      title: "Introduction to GraphQL",
+      link: 'https://aasthamahindra.hashnode.dev/introduction-to-graphql',
+      image: graphql,
+    },
+    {
+      title: "Mastering GraphQL: Best Practices and Advanced Features",
+      link: 'https://aasthamahindra.hashnode.dev/graphql-best-practices',
+      image: graphql,
     }
   ],
 

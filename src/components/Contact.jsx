@@ -100,7 +100,7 @@ const Contact = ({ data }) => {
               marginBottom: 'var(--gap-md)',
               fontSize: isMobile ? '1rem' : '1.1rem'
             }}>
-              If you're hiring for backend roles or want to collaborate, send a note — I reply quickly.
+              If you're hiring for backend roles or want to collaborate, send a note, I reply quickly.
             </p>
             
             <div style={{ 

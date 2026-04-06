@@ -8,6 +8,7 @@ import Services from './components/Services';
 import Experience from './components/Experience';
 import Works from './components/Works';
 import Contact from './components/Contact';
+import Blogs from './components/Blogs';
 import { getPortfolioData } from './services/portfolioService';
 
 const App = () => {
@@ -84,6 +85,7 @@ const App = () => {
               <Hero data={data} />
               <Experience data={data} />
               <Works data={data} />
+              <Blogs data={data} />
               <Services data={data} />
               <Contact data={data} />
             </main>
