@@ -5,46 +5,37 @@ import SectionContainer from './SectionContainer';
 
 const Services = ({ data }) => {
   const tags = {
-    api: [
-      ...(data?.skills?.backend || []).map((s) => s?.name).filter(Boolean),
-      'NodeJS',
-      'Redis',
-      'MongoDB',
-      'PostgreSQL'
-    ].slice(0, 5),
-    data: [
-      ...(data?.skills?.databases || []).map((s) => s?.name).filter(Boolean),
-      ...(data?.skills?.toolsCloud || []).map((s) => s?.name).filter(Boolean)
-    ].slice(0, 5),
-    perf: [
-      'Profiling',
-      'Query optimization',
-      'Caching',
-      'Monitoring'
-    ],
-    backend: [
-      'Design reviews',
-      'API contracts',
-      'Reliability',
-      'DX'
-    ]
+    api: ['Spring Boot', 'Fastify', 'GraphQL', 'REST', 'SDK Development'],
+    data: ['PostgreSQL', 'MongoDB', 'Redis', 'PostGIS', 'Geo Queries'],
+    realtime: ['Webhooks', 'MQTT', 'Socket.IO', 'Async Processing'],
+    fullstack: ['React', 'JavaScript', 'TypeScript', 'Node.js', 'API Integration'],
+    architecture: ['Microservices', 'Caching', 'Scalable Systems', 'API Design']
   };
-
+  
   const cards = [
     {
-      title: 'API Development',
-      description: 'Clean REST interfaces, validation, versioning, and reliability-minded delivery.',
+      title: 'API & Platform Development',
+      description:
+        'Designing and building scalable REST and GraphQL APIs across Java (Spring Boot) and Node.js (Fastify/Express), with a focus on clean contracts and maintainable architecture.',
       stack: tags.api
     },
     {
-      title: 'Performance Optimization',
-      description: 'Reduce latency with profiling, query tuning, caching strategy, and observability.',
-      stack: tags.perf
+      title: 'Full-Stack Development',
+      description:
+        'Building end-to-end applications with React frontends and Java/Node.js backends, focusing on clean integrations, real-time features, and production-ready systems.',
+      stack: tags.fullstack
     },
     {
-      title: 'Backend Systems',
-      description: 'Maintainable services with clear ownership, guardrails, and production discipline.',
-      stack: tags.backend
+      title: 'Data & Geospatial Systems',
+      description:
+        'Working with large-scale datasets using PostgreSQL, MongoDB, and Redis, including geospatial processing with PostGIS and efficient query design.',
+      stack: tags.data
+    },
+    {
+      title: 'Real-Time & Event Systems',
+      description:
+        'Building real-time data pipelines using webhooks and MQTT, enabling event-driven systems and near real-time data delivery.',
+      stack: tags.realtime
     }
   ];
 
