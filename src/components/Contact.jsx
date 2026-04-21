@@ -100,7 +100,7 @@ const Contact = ({ data }) => {
               marginBottom: 'var(--gap-md)',
               fontSize: isMobile ? '1rem' : '1.1rem'
             }}>
-              If you're hiring for backend roles or want to collaborate, send a note, I reply quickly.
+              If you're hiring for backend/full-stack roles or want to collaborate, send a note, I reply quickly.
             </p>
             
             <div style={{ 
@@ -140,6 +140,48 @@ const Contact = ({ data }) => {
                     }}
                   >
                     {data?.location || ''}
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ 
+              display: 'grid', 
+              gap: 'var(--gap-md)',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(200px, 1fr))'
+            }}>
+              <div>
+                <strong style={{ color: 'var(--text-primary)', fontSize: isMobile ? '0.95rem' : '1rem' }}>Linkedin:</strong>
+                <div>
+                  <a 
+                    href={`mailto:${data?.linkedin || ''}`}
+                    style={{
+                      color: 'var(--dusty-rose)',
+                      textDecoration: 'none',
+                      fontSize: isMobile ? '1rem' : '1.1rem',
+                      wordBreak: 'break-word'
+                    }}
+                  >
+                    {data?.linkedin || ''}
+                  </a>
+                </div>
+              </div>
+              
+              <div>
+                <strong style={{ color: 'var(--text-primary)', fontSize: isMobile ? '0.95rem' : '1rem' }}>GitHub:</strong>
+                <div>
+                  <a 
+                    href={data?.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      color: 'var(--sage-green)',
+                      textDecoration: 'none',
+                      fontSize: isMobile ? '1rem' : '1.1rem',
+                      wordBreak: 'break-word'
+                    }}
+                  >
+                    {data?.github || ''}
                   </a>
                 </div>
               </div>
