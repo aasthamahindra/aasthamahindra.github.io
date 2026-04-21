@@ -70,7 +70,7 @@ const IntroAnimation = ({ onComplete }) => {
     }
   };
 
-  const name = "Aastha Mahindra";
+  const name = "Aastha";
   const letters = name.split('');
 
   return (

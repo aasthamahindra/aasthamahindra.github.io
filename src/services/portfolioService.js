@@ -11,6 +11,8 @@ const PORTFOLIO_DATA = {
   email: 'aastha.mahindra125@gmail.com',
   location: 'Bangalore, India',
   locationLink: 'https://maps.app.goo.gl/v4SUbvBY23pUKREv9',
+  github: 'https://github.com/aasthamahindra',
+  linkedin: 'https://www.linkedin.com/in/aastha-mahindra',
   resumeLink: resume,
 
   hero: {
@@ -43,20 +45,20 @@ const PORTFOLIO_DATA = {
 
   projects: [
     {
-      title: 'Certificate Generator',
-      impact: 'Automated certificate generation to reduce manual effort and improve consistency.',
-      technologies: ['Python'],
-      github: 'https://github.com/aasthamahindra/certificate-generator.git',
-      live: '',
-      image: certificate
-    },
-    {
       title: 'Boxfit',
       impact: 'A fitness web experience focused on clean UX and simple workflows.',
       technologies: ['JavaScript'],
       github: 'https://github.com/aasthamahindra/boxfit.git',
       live: '',
       image: boxfit
+    },
+    {
+      title: 'Certificate Generator',
+      impact: 'Automated certificate generation to reduce manual effort and improve consistency.',
+      technologies: ['Python'],
+      github: 'https://github.com/aasthamahindra/certificate-generator.git',
+      live: '',
+      image: certificate
     }
   ],
 
@@ -85,21 +87,28 @@ const PORTFOLIO_DATA = {
 
   experience: [
     {
-      company: 'Ambee',
+      company: 'Ambee Datair Technology Pvt. Ltd.',
       role: 'Software Engineer',
       period: 'Jul 2023 — Present',
       bullets: [
-        'Built and maintained backend APIs/SDK services with a focus on reliability and developer experience.',
-        'Improved data handling and query performance to support large datasets and production usage.'
+        'Designed and built REST and GraphQL APIs using Java (Spring Boot, Spring MVC, Spring Data JPA) and Node.js (Fastify/Express) for climate intelligence platforms.',
+        'Implemented Redis-based caching and geo-lookup strategies to improve API performance and scalability.',
+        'Developed geospatial API services using PostGIS with PostgreSQL and Hibernate ORM.',
+        'Refactored Node.js services to an asynchronous, non-blocking architecture to improve concurrency and system efficiency.',
+        'Optimized PostgreSQL and MongoDB queries using indexing and aggregation pipelines.',
+        'Built real-time webhook pipelines and MQTT-based data streams for environmental data delivery.',
+        'Implemented cross-cutting concerns using Spring AOP and secured APIs with Spring Security.',
+        'Maintained code quality through unit and integration testing (JUnit, Jest) and active participation in code reviews.'
       ]
     },
     {
-      company: 'Ambee',
+      company: 'Ambee Datair Technology Pvt. Ltd.',
       role: 'Software Engineer Intern',
-      period: 'Jan 2023 — Jul 2023',
+      period: 'Jan 2023 — Jun 2023',
       bullets: [
-        'Shipped backend features and bug fixes across internal services with ownership and iteration speed.',
-        'Collaborated closely with senior engineers to improve API contracts and reduce integration friction.'
+        'Developed core modules for a Node.js SDK integrating multiple climate APIs.',
+        'Implemented MQTT-based real-time data pipelines for IoT device communication.',
+        'Contributed to Agile development cycles, CI/CD improvements, and technical documentation.'
       ]
     },
     {
@@ -107,8 +116,8 @@ const PORTFOLIO_DATA = {
       role: 'Trainee',
       period: 'Jul 2022 — Aug 2022',
       bullets: [
-        'Delivered training assignments with a focus on fundamentals and structured problem-solving.',
-        'Documented outcomes and communicated progress clearly across stakeholders.'
+        'Built a full-stack project management web application using React.js and Spring Boot with Hibernate ORM and MySQL.',
+        'Designed and tested REST APIs with structured validation using Postman.'
       ]
     },
     {
@@ -116,8 +125,8 @@ const PORTFOLIO_DATA = {
       role: 'Backend Developer Intern',
       period: 'May 2021 — Oct 2021',
       bullets: [
-        'Worked on backend components with attention to correctness, structure, and maintainability.',
-        'Supported feature delivery with iterative testing and clear reporting.'
+        'Developed a GeoDjango and PostGIS-based analytics platform for geospatial crop intelligence.',
+        'Worked on backend systems for processing and analyzing geospatial datasets.'
       ]
     }
   ],

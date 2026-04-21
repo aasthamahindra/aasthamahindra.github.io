@@ -10,7 +10,7 @@ const Navigation = () => {
   const sections = [
     { id: 'hero', label: 'About' },
     { id: 'experience', label: 'Experience' },
-    { id: 'works', label: 'Works' },
+    { id: 'works', label: 'Projects' },
     { id: 'blogs', label: 'Blogs' },
     { id: 'services', label: 'Services' },
     { id: 'contact', label: 'Contact' }

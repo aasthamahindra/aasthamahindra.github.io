@@ -41,7 +41,7 @@ const Works = ({ data }) => {
         viewport={{ once: true, amount: 0.3 }}
       >
         <motion.div variants={textRevealVariants}>
-          <h2 className="section-title">Works</h2>
+          <h2 className="section-title">Projects</h2>
         </motion.div>
 
         <motion.div className="works-grid" variants={cardVariants} style={{ marginTop: 'var(--gap-md)' }}>
