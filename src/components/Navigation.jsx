@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navigation = () => {
@@ -6,6 +6,7 @@ const Navigation = () => {
   const [activeSection, setActiveSection] = useState('hero');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const observerRef = useRef(null);
 
   const sections = [
     { id: 'hero', label: 'About' },
@@ -16,44 +17,50 @@ const Navigation = () => {
     { id: 'contact', label: 'Contact' }
   ];
 
+  const sectionIds = sections.map(s => s.id);
+
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-
-      const sectionElements = sections.map(section => ({
-        id: section.id,
-        element: document.getElementById(section.id)
-      }));
-
-      const currentSection = sectionElements.find(section => {
-        if (section.element) {
-          const rect = section.element.getBoundingClientRect();
-          const middle = window.innerHeight / 2;
-          return rect.top <= middle && rect.bottom >= middle;
-        }
-      });
-
-      if (currentSection) {
-        setActiveSection(currentSection.id);
-      }
-    };
-
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-      if (window.innerWidth >= 768) {
-        setIsMobileMenuOpen(false);
-      }
-    };
-
-    handleResize();
+    // Scroll watcher for nav blur effect
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleResize);
     handleScroll();
+
+    // IntersectionObserver for active section
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter(e => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visible.length > 0) {
+          setActiveSection(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: '-20% 0px -70% 0px',
+        threshold: 0
+      }
+    );
+
+    sectionIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observerRef.current.observe(el);
+    });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
+      if (observerRef.current) observerRef.current.disconnect();
     };
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      if (window.innerWidth >= 768) setIsMobileMenuOpen(false);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const scrollToSection = (sectionId) => {
@@ -64,20 +71,41 @@ const Navigation = () => {
     }
   };
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+  const toggleMobileMenu = () => setIsMobileMenuOpen(prev => !prev);
 
   const navVariants = {
     hidden: { y: -100 },
     visible: {
       y: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.6, -0.05, 0.01, 0.99]
-      }
+      transition: { duration: 0.6, ease: [0.6, -0.05, 0.01, 0.99] }
     }
   };
+
+  const getNavButtonStyle = (isActive) => ({
+    padding: '0.45rem 0.9rem',
+    background: isActive ? 'rgba(212, 165, 165, 0.12)' : 'transparent',
+    border: isActive
+      ? '1px solid rgba(212, 165, 165, 0.55)'
+      : '1px solid transparent',
+    borderRadius: '999px',
+    cursor: 'pointer',
+    fontSize: '0.95rem',
+    fontWeight: '600',
+    backgroundImage: isActive
+      ? 'linear-gradient(135deg, var(--dusty-rose), var(--sage-green))'
+      : 'none',
+    WebkitBackgroundClip: isActive ? 'text' : 'unset',
+    WebkitTextFillColor: isActive ? 'transparent' : 'var(--text-secondary)',
+    backgroundClip: isActive ? 'text' : 'unset',
+    color: isActive ? 'transparent' : 'var(--text-secondary)',
+    transition: 'all 0.25s ease',
+    minWidth: '86px',
+    height: '36px',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden'
+  });
 
   return (
     <motion.nav
@@ -98,7 +126,7 @@ const Navigation = () => {
         backdropFilter: isScrolled ? 'blur(25px)' : 'blur(20px)',
         border: '1px solid rgba(255, 255, 255, 0.2)',
         borderRadius: '100px',
-        padding: isMobile ? '0.6rem 0.9rem' : '0.6rem 0.9rem',
+        padding: '0.6rem 0.9rem',
         boxShadow: 'none',
         transition: 'all 0.3s ease',
         maxWidth: isMobile ? 'calc(100% - 32px)' : 'fit-content'
@@ -106,14 +134,7 @@ const Navigation = () => {
     >
       {/* Desktop Navigation */}
       {!isMobile && (
-        <div
-          className="desktop-nav"
-          style={{
-            display: 'flex',
-            gap: '0.25rem',
-            alignItems: 'center'
-          }}
-        >
+        <div style={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
           {sections.map((section) => (
             <motion.button
               key={section.id}
@@ -121,32 +142,7 @@ const Navigation = () => {
               className={`nav-link ${activeSection === section.id ? 'active' : ''}`}
               whileHover={{ y: -2, scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              style={{
-                padding: '0.45rem 0.9rem',
-                background: activeSection === section.id
-                  ? 'rgba(212, 165, 165, 0.12)'
-                  : 'transparent',
-                border: activeSection === section.id
-                  ? '1px solid rgba(212, 165, 165, 0.55)'
-                  : '1px solid transparent',
-                borderRadius: '999px',
-                cursor: 'pointer',
-                fontSize: '0.95rem',
-                fontWeight: '600',
-                backgroundImage: activeSection === section.id
-                  ? 'linear-gradient(135deg, var(--dusty-rose), var(--sage-green))'
-                  : 'none',
-                WebkitBackgroundClip: activeSection === section.id ? 'text' : 'initial',
-                WebkitTextFillColor: activeSection === section.id ? 'transparent' : 'var(--text-secondary)',
-                backgroundClip: activeSection === section.id ? 'text' : 'initial',
-                transition: 'all 0.25s ease',
-                minWidth: '86px',
-                height: '36px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                overflow: 'hidden'
-              }}
+              style={getNavButtonStyle(activeSection === section.id)}
             >
               {section.label}
             </motion.button>
@@ -158,14 +154,9 @@ const Navigation = () => {
       {isMobile && (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
           <div style={{ fontSize: '1.2rem', fontWeight: '700', color: 'var(--text-primary)' }}>
-            {activeSection === 'hero' && 'About'}
-            {activeSection === 'experience' && 'Experience'}
-            {activeSection === 'works' && 'Works'}
-            {activeSection === 'blogs' && 'Blogs'}
-            {activeSection === 'services' && 'Services'}
-            {activeSection === 'contact' && 'Contact'}
+            {sections.find(s => s.id === activeSection)?.label}
           </div>
-          
+
           <motion.button
             onClick={toggleMobileMenu}
             whileHover={{ scale: 1.05 }}
@@ -184,42 +175,16 @@ const Navigation = () => {
             }}
           >
             <motion.div
-              animate={{
-                rotate: isMobileMenuOpen ? 45 : 0,
-                y: isMobileMenuOpen ? 6 : 0
-              }}
-              style={{
-                width: '20px',
-                height: '2px',
-                background: 'var(--text-primary)',
-                marginBottom: '4px',
-                transition: 'all 0.3s ease'
-              }}
+              animate={{ rotate: isMobileMenuOpen ? 45 : 0, y: isMobileMenuOpen ? 6 : 0 }}
+              style={{ width: '20px', height: '2px', background: 'var(--text-primary)', marginBottom: '4px' }}
             />
             <motion.div
-              animate={{
-                opacity: isMobileMenuOpen ? 0 : 1,
-                x: isMobileMenuOpen ? -20 : 0
-              }}
-              style={{
-                width: '20px',
-                height: '2px',
-                background: 'var(--text-primary)',
-                marginBottom: '4px',
-                transition: 'all 0.3s ease'
-              }}
+              animate={{ opacity: isMobileMenuOpen ? 0 : 1, x: isMobileMenuOpen ? -20 : 0 }}
+              style={{ width: '20px', height: '2px', background: 'var(--text-primary)', marginBottom: '4px' }}
             />
             <motion.div
-              animate={{
-                rotate: isMobileMenuOpen ? -45 : 0,
-                y: isMobileMenuOpen ? -6 : 0
-              }}
-              style={{
-                width: '20px',
-                height: '2px',
-                background: 'var(--text-primary)',
-                transition: 'all 0.3s ease'
-              }}
+              animate={{ rotate: isMobileMenuOpen ? -45 : 0, y: isMobileMenuOpen ? -6 : 0 }}
+              style={{ width: '20px', height: '2px', background: 'var(--text-primary)' }}
             />
           </motion.button>
         </div>
@@ -266,6 +231,7 @@ const Navigation = () => {
                   fontSize: '1rem',
                   fontWeight: '600',
                   color: activeSection === section.id ? 'var(--dusty-rose)' : 'var(--text-primary)',
+                  WebkitTextFillColor: activeSection === section.id ? 'var(--dusty-rose)' : 'var(--text-primary)',
                   textAlign: 'left',
                   marginBottom: '0.5rem',
                   transition: 'all 0.25s ease'
