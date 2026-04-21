@@ -5,8 +5,7 @@ import SectionContainer from './SectionContainer';
 
 const Services = ({ data }) => {
   const tags = {
-    api: ['Spring Boot', 'Fastify', 'GraphQL', 'REST', 'SDK Development'],
-    data: ['PostgreSQL', 'MongoDB', 'Redis', 'PostGIS', 'Geo Queries'],
+    api: ['Spring Boot', 'Fastify', 'GraphQL', 'REST', 'SDK Development', 'PostgreSQL', 'MongoDB', 'Redis', 'PostGIS', 'Geo Queries'],
     realtime: ['Webhooks', 'MQTT', 'Socket.IO', 'Async Processing'],
     fullstack: ['React', 'JavaScript', 'TypeScript', 'Node.js', 'API Integration'],
     architecture: ['Microservices', 'Caching', 'Scalable Systems', 'API Design']
@@ -14,9 +13,9 @@ const Services = ({ data }) => {
   
   const cards = [
     {
-      title: 'API & Platform Development',
+      title: 'API, Data & Geospatial Systems',
       description:
-        'Designing and building scalable REST and GraphQL APIs across Java (Spring Boot) and Node.js (Fastify/Express), with a focus on clean contracts and maintainable architecture.',
+        'Developing scalable APIs and data systems across Java and Node.js, with PostgreSQL, MongoDB, Redis, and geospatial processing via PostGIS.',
       stack: tags.api
     },
     {
@@ -24,12 +23,6 @@ const Services = ({ data }) => {
       description:
         'Building end-to-end applications with React frontends and Java/Node.js backends, focusing on clean integrations, real-time features, and production-ready systems.',
       stack: tags.fullstack
-    },
-    {
-      title: 'Data & Geospatial Systems',
-      description:
-        'Working with large-scale datasets using PostgreSQL, MongoDB, and Redis, including geospatial processing with PostGIS and efficient query design.',
-      stack: tags.data
     },
     {
       title: 'Real-Time & Event Systems',

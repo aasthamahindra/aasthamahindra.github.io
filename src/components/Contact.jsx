@@ -148,7 +148,8 @@ const Contact = ({ data }) => {
             <div style={{ 
               display: 'grid', 
               gap: 'var(--gap-md)',
-              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(200px, 1fr))'
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(200px, 1fr))',
+              marginTop: '10px',
             }}>
               <div>
                 <strong style={{ color: 'var(--text-primary)', fontSize: isMobile ? '0.95rem' : '1rem' }}>Linkedin:</strong>

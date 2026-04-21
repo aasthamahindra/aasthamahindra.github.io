@@ -28,9 +28,9 @@ const Navigation = () => {
       const currentSection = sectionElements.find(section => {
         if (section.element) {
           const rect = section.element.getBoundingClientRect();
-          return rect.top <= 120 && rect.bottom >= 120;
+          const middle = window.innerHeight / 2;
+          return rect.top <= middle && rect.bottom >= middle;
         }
-        return false;
       });
 
       if (currentSection) {

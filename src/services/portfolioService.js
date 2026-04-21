@@ -27,20 +27,9 @@ const PORTFOLIO_DATA = {
   },
 
   focusItems: [
-    "Backend Architecture & System Design",
-    "API Performance & Database Optimization",
-    "Building Secure and Scalable Applications"
-  ],
-
-  services: [
-    {
-      title: 'API Development',
-      description: 'Design and ship reliable REST APIs with clean contracts, validation, and monitoring.'
-    },
-    {
-      title: 'Performance & Reliability',
-      description: 'Profile bottlenecks and improve query performance, latency, and overall system reliability.'
-    }
+    "Scalable Backend Architecture",
+    "Full-Stack Systems",
+    "APIs, Data & Performance Engineering"
   ],
 
   projects: [
