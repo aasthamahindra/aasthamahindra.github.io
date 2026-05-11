@@ -76,7 +76,7 @@ export const textRevealVariants = {
     y: 0,
     rotateX: 0,
     transition: {
-      duration: 0.9,
+      duration: 0.5,
       ease: easings.smooth
     }
   }
@@ -92,10 +92,10 @@ export const heroVariants = {
     opacity: 1,
     scale: 1,
     transition: {
-      duration: 1.4,
+      duration: 0.6,
       ease: easings.smooth,
-      staggerChildren: 0.3,
-      delayChildren: 0.4
+      staggerChildren: 0.1,
+      delayChildren: 0.1
     }
   }
 };
