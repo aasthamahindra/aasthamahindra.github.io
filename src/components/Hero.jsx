@@ -1,25 +1,35 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { heroVariants, textRevealVariants, cardVariants } from '../utils/animations';
+import {
+  heroVariants,
+  textRevealVariants,
+  cardVariants,
+} from '../utils/animations';
+
 import profile from '../assets/profile.png';
+import resume from '../assets/resume.pdf';
 
 /* Questions */
 const QA = [
   {
     keywords: ['stack', 'tech', 'language', 'framework', 'tools'],
-    answer: 'Java (Spring Boot), Node.js (Fastify/Express), PostgreSQL, MongoDB, Redis, PostGIS.',
+    answer:
+      'Java (Spring Boot), Node.js (Fastify/Express), PostgreSQL, MongoDB, Redis, PostGIS.',
   },
   {
     keywords: ['experience', 'work', 'job', 'company', 'years', 'ambee'],
-    answer: 'Software Engineer @ Ambee Datair Technology since Jul 2023 — building climate intelligence APIs.',
+    answer:
+      'Software Engineer @ Ambee Datair Technology since Jul 2023 — building climate intelligence APIs.',
   },
   {
     keywords: ['focus', 'speciali', 'backend', 'architecture'],
-    answer: 'Scalable backend systems, full-stack builds, and high-performance API + data engineering.',
+    answer:
+      'Scalable backend systems, full-stack builds, and high-performance API + data engineering.',
   },
   {
     keywords: ['hobby', 'hobbies', 'interest', 'fun', 'outside', 'book', 'read'],
-    answer: "Book lover at heart. I lose myself in captivating stories and cherish the wisdom within.",
+    answer:
+      'Book lover at heart. I lose myself in captivating stories and cherish the wisdom within.',
   },
   {
     keywords: ['resume', 'cv', 'download', 'hire'],
@@ -31,7 +41,8 @@ const QA = [
   },
   {
     keywords: ['mantra', 'motto', 'philosophy', 'life'],
-    answer: "'You only live once' — so build things that matter and cherish every moment.",
+    answer:
+      "'You only live once' — so build things that matter and cherish every moment.",
   },
 ];
 
@@ -39,10 +50,18 @@ const QUESTIONS_LIMIT = 3;
 
 const BOOT_LINES = [
   { text: '> portfolio v2.0 initialised', dim: true, delay: 0 },
-  { text: '> loading aastha.json  ·  done ✓', dim: true, delay: 450 },
+  { text: '> loading aastha.json · done ✓', dim: true, delay: 450 },
   { text: '', delay: 700 },
-  { text: '  Ask me anything — 3 questions allowed.', accent: true, delay: 900 },
-  { text: '  try: stack  ·  experience  ·  focus  ·  hobbies  ·  resume', dim: true, delay: 1150 },
+  {
+    text: ' Ask me anything — 3 questions allowed.',
+    accent: true,
+    delay: 900,
+  },
+  {
+    text: ' try: stack · experience · focus · hobbies · resume',
+    dim: true,
+    delay: 1150,
+  },
 ];
 
 const STATS = [
@@ -53,13 +72,17 @@ const STATS = [
 
 function matchAnswer(input) {
   const q = input.toLowerCase().trim();
+
   for (const entry of QA) {
-    if (entry.keywords.some(k => q.includes(k))) return entry.answer;
+    if (entry.keywords.some((k) => q.includes(k))) {
+      return entry.answer;
+    }
   }
-  return "Not sure about that! Try: stack, experience, focus, hobbies, or resume.";
+
+  return 'Not sure about that! Try: stack, experience, focus, hobbies, or resume.';
 }
 
-// ─── Boot line ───
+/* Boot line */
 const BootLine = ({ text, dim, accent, delay }) => (
   <motion.div
     initial={{ opacity: 0 }}
@@ -68,26 +91,33 @@ const BootLine = ({ text, dim, accent, delay }) => (
     style={{
       fontFamily: "'Space Mono', monospace",
       fontSize: '11px',
-      lineHeight: 2,
-      color: accent ? 'var(--dusty-rose)' : dim ? 'var(--text-secondary)' : 'var(--text-primary)',
+      lineHeight: 1.9,
+      color: accent
+        ? 'var(--dusty-rose)'
+        : dim
+        ? 'var(--text-secondary)'
+        : 'var(--text-primary)',
       fontWeight: accent ? '700' : '400',
       minHeight: text ? undefined : '10px',
     }}
   >
-    {text}{accent && <BlinkCursor />}
+    {text}
+    {accent && <BlinkCursor />}
   </motion.div>
 );
 
-// ─── Blinking cursor ───
+/* Cursor */
 const BlinkCursor = () => (
   <motion.span
     animate={{ opacity: [1, 0, 1] }}
-    transition={{ duration: 1, repeat: Infinity, ease: 'steps(1)' }}
+    transition={{
+      duration: 1,
+      repeat: Infinity,
+      ease: 'steps(1)',
+    }}
     style={{
       display: 'inline-block',
-      marginLeft: '3px',
-      fontFamily: "'Space Mono', monospace",
-      fontSize: '11px',
+      marginLeft: '4px',
       color: 'var(--dusty-rose)',
     }}
   >
@@ -95,7 +125,7 @@ const BlinkCursor = () => (
   </motion.span>
 );
 
-// ─── Chat bubble ───
+/* Chat line */
 const ChatLine = ({ role, text }) => (
   <motion.div
     initial={{ opacity: 0, y: 4 }}
@@ -104,112 +134,90 @@ const ChatLine = ({ role, text }) => (
     style={{
       fontFamily: "'Space Mono', monospace",
       fontSize: '11px',
-      lineHeight: 1.9,
-      color: role === 'user' ? 'var(--text-primary)' : 'var(--dusty-rose)',
+      lineHeight: 1.8,
+      color:
+        role === 'user'
+          ? 'var(--text-primary)'
+          : 'var(--dusty-rose)',
       wordBreak: 'break-word',
     }}
   >
-    {role === 'user' ? '> ' : '  → '}{text}
+    {role === 'user' ? '> ' : ' → '}
+    {text}
   </motion.div>
 );
 
-// ─── Scroll affordance ───
-const ScrollHint = ({ visible }) => (
-  <AnimatePresence>
-    {visible && (
-      <motion.div
-        initial={{ opacity: 0, y: -8 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0 }}
-        transition={{ delay: 2.2, duration: 0.6 }}
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '6px',
-          paddingTop: '2rem',
-          paddingBottom: '1rem',
-        }}
-      >
-        <span style={{
-          fontFamily: "'Space Mono', monospace",
-          fontSize: '9px',
-          letterSpacing: '0.18em',
-          textTransform: 'uppercase',
-          color: 'var(--text-secondary)',
-        }}>
-          scroll
-        </span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ color: 'var(--dusty-rose)', fontSize: '14px', lineHeight: 1 }}
-        >
-          ↓
-        </motion.div>
-      </motion.div>
-    )}
-  </AnimatePresence>
-);
-
-// ─── Hero ───
 const Hero = ({ data }) => {
-  const [input, setInput]           = useState('');
-  const [chat, setChat]             = useState([]);
-  const [questionsLeft, setLeft]    = useState(QUESTIONS_LIMIT);
-  const [booted, setBooted]         = useState(false);
-  const [showScroll, setShowScroll] = useState(true);
+  const [input, setInput] = useState('');
+  const [chat, setChat] = useState([]);
+  const [questionsLeft, setQuestionsLeft] =
+    useState(QUESTIONS_LIMIT);
+
+  const [booted, setBooted] = useState(false);
 
   const chatScrollRef = useRef(null);
-  const bottomRef     = useRef(null);
 
   useEffect(() => {
     const last = BOOT_LINES[BOOT_LINES.length - 1].delay;
-    const t = setTimeout(() => setBooted(true), last + 350);
+
+    const t = setTimeout(() => {
+      setBooted(true);
+    }, last + 350);
+
     return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
-    const onScroll = () => { if (window.scrollY > 40) setShowScroll(false); };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  useEffect(() => {
-    if (chat.length > 0 && chatScrollRef.current) {
-      chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight;
+    if (chatScrollRef.current) {
+      chatScrollRef.current.scrollTop =
+        chatScrollRef.current.scrollHeight;
     }
   }, [chat]);
 
   const handleSubmit = () => {
     const q = input.trim();
+
     if (!q || questionsLeft === 0) return;
-    const answer    = matchAnswer(q);
+
+    const answer = matchAnswer(q);
     const remaining = questionsLeft - 1;
-    setChat(prev => [
+
+    setChat((prev) => [
       ...prev,
       { role: 'user', text: q },
-      { role: 'bot', text: remaining === 0 ? `${answer}  ·  [session closed]` : answer },
+      {
+        role: 'bot',
+        text:
+          remaining === 0
+            ? `${answer} · [session closed]`
+            : answer,
+      },
     ]);
-    setLeft(remaining);
+
+    setQuestionsLeft(remaining);
     setInput('');
   };
 
-  const roleLabel  = data?.hero?.roleTop  || data?.title       || '';
-  const name       = data?.hero?.headline || data?.name        || '';
-  const nameParts  = name.trim().split(' ');
-  const firstName  = nameParts[0] || '';
-  const lastName   = nameParts.slice(1).join(' ') || '';
-  const summary    = data?.about?.summary || '';
-  const resumeLink = data?.resumeLink     || '';
+  const roleLabel =
+    data?.hero?.roleTop || data?.title || '';
+
+  const name =
+    data?.hero?.headline || data?.name || '';
+
+  const summary =
+    data?.about?.summary || '';
+
+  const nameParts = name.trim().split(' ');
+  const firstName = nameParts[0] || '';
+  const lastName = nameParts.slice(1).join(' ');
 
   return (
     <section
       className="section hero"
       id="hero"
       style={{
-        paddingTop: 'calc(var(--section-padding) + 64px)',
-        paddingBottom: 'var(--section-padding)',
+        paddingTop: '120px',
+        paddingBottom: '40px',
       }}
     >
       <div className="container">
@@ -220,122 +228,109 @@ const Hero = ({ data }) => {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '2.5rem',
-            width: '100%',
+            gap: '2rem',
           }}
         >
-
-          {/* ── HEADER: role label + name ── */}
+          {/* HEADER */}
           <motion.div
             variants={textRevealVariants}
-            style={{ textAlign: 'center' }}
+            style={{
+              textAlign: 'center',
+            }}
           >
-            {/* Role + positioning tag */}
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              fontSize: '0.72rem',
-              fontWeight: '600',
-              marginBottom: '1.25rem',
-              textTransform: 'uppercase',
-              letterSpacing: '0.14em',
-              fontFamily: "'Space Mono', monospace",
-            }}>
-              <motion.span
-                animate={{ scale: [1, 1.4, 1], opacity: [0.6, 1, 0.6] }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                marginBottom: '1rem',
+                fontFamily: "'Space Mono', monospace",
+                fontSize: '12px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.14em',
+              }}
+            >
+
+              <span
                 style={{
-                  display: 'inline-block',
-                  width: '6px',
-                  height: '6px',
-                  borderRadius: '50%',
+                  color: 'var(--dusty-rose)',
+                  fontWeight: 600,
                 }}
-              />
-              <span style={{ color: 'var(--dusty-rose)' }}>
+              >
                 {roleLabel}
               </span>
             </div>
 
-            <h1 style={{
-              fontSize: 'clamp(2.8rem, 8vw, 6.5rem)',
-              fontWeight: '900',
-              lineHeight: '1',
-              letterSpacing: '-0.04em',
-              margin: 0,
-              paddingBottom: '0.1em',
-            }}>
-              <span style={{
-                  color: 'var(--text-primary)',
-                  WebkitTextFillColor: 'var(--text-primary)',
-              }}>
-                {firstName}
-              </span>
-              {lastName && (
-                <>
-                  {' '}
-                  <span style={{
-                    color: 'var(--text-primary)',
-                    WebkitTextFillColor: 'var(--text-primary)',
-                  }}>
-                    {lastName}
-                  </span>
-                </>
-              )}
+            <h1
+              style={{
+                fontSize: 'clamp(2.8rem, 7vw, 5rem)',
+                fontWeight: 900,
+                lineHeight: 1,
+                letterSpacing: '-0.05em',
+                margin: 0,
+                color: 'var(--text-primary)',
+              }}
+            >
+              {firstName} {lastName}
             </h1>
           </motion.div>
 
+          {/* GRID */}
           <motion.div
             variants={cardVariants}
             className="hero-grid"
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: 'var(--gap-lg)',
-              alignItems: 'start',
-              width: '100%',
+              gridTemplateColumns: '1fr 1fr 1fr',
+              gap: '1.5rem',
+              alignItems: 'stretch',
             }}
           >
-
-            <motion.div variants={textRevealVariants} style={{ height: '100%' }}>
+            {/* BIO */}
+            <motion.div variants={textRevealVariants}>
               <div
                 className="glass-card"
                 style={{
-                  padding: '1.5rem',
-                  borderRadius: '16px',
-                  height: '100%',
                   background: 'rgba(255,255,255,0.72)',
-                  boxShadow: '0 2px 24px rgba(196,149,106,0.08)',
-                  boxSizing: 'border-box',
+                  borderRadius: '18px',
+                  padding: '1.5rem',
+                  boxShadow:
+                    '0 2px 24px rgba(196,149,106,0.08)',
+                  height: '100%',
                 }}
               >
-                <p style={{
-                  fontSize: '0.95rem',
-                  fontWeight: '400',
-                  lineHeight: 1.7,
-                  color: 'var(--text-secondary)',
-                  margin: 0,
-                }}>
+                <p
+                  style={{
+                    fontSize: '1rem',
+                    lineHeight: 1.8,
+                    color: 'var(--text-secondary)',
+                    margin: 0,
+                  }}
+                >
                   {summary}
                 </p>
               </div>
             </motion.div>
 
-            {/* COL 2 – IMAGE */}
+            {/* IMAGE */}
             <motion.div
               variants={textRevealVariants}
-              style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
             >
               <motion.div
-                whileHover={{ scale: 1.03 }}
+                whileHover={{ scale: 1.02 }}
                 style={{
                   width: '100%',
-                  maxWidth: '340px',
+                  maxWidth: '300px',
                   aspectRatio: '1 / 1',
-                  borderRadius: '20px',
                   overflow: 'hidden',
-                  boxShadow: '0 0 0 4px var(--dusty-rose, rgba(196,149,106,0.8)), 0 8px 40px rgba(196,149,106,0.18)',
-                  flexShrink: 0,
+                  borderRadius: '18px',
+                  margin: '0 auto',
+                  boxShadow:
+                    '0 0 0 3px rgba(212,165,165,0.5), 0 8px 32px rgba(196,149,106,0.2)',
                 }}
               >
                 <img
@@ -345,138 +340,196 @@ const Hero = ({ data }) => {
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
-                    objectPosition: 'center 15%',
                     display: 'block',
                   }}
                 />
               </motion.div>
             </motion.div>
 
-            {/* COL 3 – TERMINAL + STATS */}
+            {/* RIGHT SIDE */}
             <motion.div
               variants={textRevealVariants}
-              style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem',
+              }}
             >
-              {/* Terminal card */}
+              {/* TERMINAL */}
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35 }}
                 style={{
-                  background: 'rgba(255,255,255,0.5)',
+                  background: 'rgba(255,255,255,0.55)',
                   backdropFilter: 'blur(20px)',
-                  borderRadius: '16px',
-                  border: '1px solid rgba(196,168,130,0.4)',
-                  padding: '16px',
+                  borderRadius: '18px',
+                  border:
+                    '1px solid rgba(196,168,130,0.3)',
+                  padding: '14px',
+                  height: '260px',
+                  minHeight: '260px',
+                  maxHeight: '260px',
+                  overflow: 'hidden',
                   display: 'flex',
                   flexDirection: 'column',
                 }}
               >
-                {/* Traffic lights */}
-                <div style={{ display: 'flex', gap: '6px', alignItems: 'center', marginBottom: '14px' }}>
-                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ff5f57' }} />
-                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ffbd2e' }} />
-                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28ca41' }} />
-                  <span style={{
-                    fontFamily: "'Space Mono', monospace",
-                    fontSize: '9px',
-                    color: 'var(--text-secondary)',
-                    marginLeft: 'auto',
-                    letterSpacing: '0.06em',
-                  }}>
+                {/* HEADER */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '5px',
+                    marginBottom: '12px',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 9,
+                      height: 9,
+                      borderRadius: '50%',
+                      background: '#ff5f57',
+                    }}
+                  />
+
+                  <div
+                    style={{
+                      width: 9,
+                      height: 9,
+                      borderRadius: '50%',
+                      background: '#ffbd2e',
+                    }}
+                  />
+
+                  <div
+                    style={{
+                      width: 9,
+                      height: 9,
+                      borderRadius: '50%',
+                      background: '#28ca41',
+                    }}
+                  />
+
+                  <span
+                    style={{
+                      marginLeft: 'auto',
+                      fontFamily: "'Space Mono', monospace",
+                      fontSize: '9px',
+                      color: 'var(--text-secondary)',
+                    }}
+                  >
                     aastha.sh
                   </span>
                 </div>
 
-                {/* Chat scroll container */}
+                {/* CHAT */}
                 <div
                   ref={chatScrollRef}
                   style={{
+                    flex: 1,
                     overflowY: 'auto',
-                    maxHeight: '200px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '1px',
                     scrollbarWidth: 'none',
+                    msOverflowStyle: 'none',
                   }}
                 >
-                  {BOOT_LINES.map((l, i) => (
-                    <BootLine key={i} text={l.text} dim={l.dim} accent={l.accent} delay={l.delay} />
+                  {BOOT_LINES.map((line, i) => (
+                    <BootLine
+                      key={i}
+                      text={line.text}
+                      dim={line.dim}
+                      accent={line.accent}
+                      delay={line.delay}
+                    />
                   ))}
+
                   <AnimatePresence>
-                    {chat.map((c, i) => <ChatLine key={i} role={c.role} text={c.text} />)}
+                    {chat.map((c, i) => (
+                      <ChatLine
+                        key={i}
+                        role={c.role}
+                        text={c.text}
+                      />
+                    ))}
                   </AnimatePresence>
-                  <div ref={bottomRef} />
                 </div>
 
-                <div style={{ borderTop: '1px solid rgba(196,168,130,0.25)', margin: '12px 0 10px' }} />
-
-                {/* Counter pill */}
                 <div
-                  aria-live="polite"
+                  style={{
+                    borderTop:
+                      '1px solid rgba(196,168,130,0.25)',
+                    margin: '10px 0',
+                  }}
+                />
+
+                {/* COUNTER */}
+                <div
                   style={{
                     fontFamily: "'Space Mono', monospace",
                     fontSize: '9px',
-                    color: questionsLeft > 0 ? 'var(--dusty-rose)' : 'var(--text-secondary)',
-                    background: 'rgba(196,149,106,0.1)',
-                    borderRadius: '20px',
-                    padding: '3px 12px',
-                    display: 'inline-block',
-                    marginBottom: '10px',
-                    letterSpacing: '0.04em',
-                    alignSelf: 'flex-start',
+                    color:
+                      questionsLeft > 0
+                        ? 'var(--dusty-rose)'
+                        : 'var(--text-secondary)',
+                    marginBottom: '8px',
                   }}
                 >
                   {questionsLeft > 0
-                    ? `${questionsLeft} question${questionsLeft === 1 ? '' : 's'} remaining`
-                    : 'session closed — explore the sections above!'}
+                    ? `${questionsLeft} question${
+                        questionsLeft === 1 ? '' : 's'
+                      } remaining`
+                    : 'session closed'}
                 </div>
 
-                {/* Input row */}
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  opacity: questionsLeft === 0 ? 0.35 : 1,
-                  pointerEvents: questionsLeft === 0 ? 'none' : 'auto',
-                  transition: 'opacity 0.3s',
-                }}>
-                  <span style={{
-                    fontFamily: "'Space Mono', monospace",
-                    fontSize: '12px',
-                    color: 'var(--dusty-rose)',
-                    flexShrink: 0,
-                  }}>{'>'}</span>
+                {/* INPUT */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                  }}
+                >
+                  <span
+                    style={{
+                      color: 'var(--dusty-rose)',
+                      fontFamily:
+                        "'Space Mono', monospace",
+                    }}
+                  >
+                    {'>'}
+                  </span>
+
                   <input
+                    value={input}
+                    placeholder={
+                      booted ? 'type a question...' : ''
+                    }
+                    onChange={(e) =>
+                      setInput(e.target.value)
+                    }
+                    onKeyDown={(e) =>
+                      e.key === 'Enter' && handleSubmit()
+                    }
+                    disabled={questionsLeft === 0}
                     style={{
                       flex: 1,
-                      background: 'transparent',
                       border: 'none',
                       outline: 'none',
-                      fontFamily: "'Space Mono', monospace",
+                      background: 'transparent',
+                      fontFamily:
+                        "'Space Mono', monospace",
                       fontSize: '11px',
                       color: 'var(--text-primary)',
-                      caretColor: 'var(--dusty-rose)',
                     }}
-                    value={input}
-                    placeholder={booted ? 'type a question...' : ''}
-                    onChange={e => setInput(e.target.value)}
-                    onKeyDown={e => e.key === 'Enter' && handleSubmit()}
-                    disabled={questionsLeft === 0}
-                    aria-label="Ask a question about Aastha"
                   />
+
                   <button
                     onClick={handleSubmit}
-                    aria-label="Send"
-                    title="Send (Enter)"
                     style={{
                       background: 'transparent',
                       border: 'none',
                       cursor: 'pointer',
-                      fontFamily: "'Space Mono', monospace",
-                      fontSize: '13px',
                       color: 'var(--dusty-rose)',
-                      padding: '0 2px',
                     }}
                   >
                     ↵
@@ -484,7 +537,84 @@ const Hero = ({ data }) => {
                 </div>
               </motion.div>
 
-              {/* Stats row */}
+              {/* RESUME BUTTON */}
+              <motion.a
+                href={resume}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{
+                  y: -2,
+                }}
+                whileTap={{
+                  scale: 0.98,
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+
+                  gap: '10px',
+
+                  textDecoration: 'none',
+
+                  padding: '15px 18px',
+
+                  borderRadius: '14px',
+
+                  background:
+                    'linear-gradient(135deg, rgba(212,165,165,0.95), rgba(201,146,146,0.92))',
+
+                  border: '1px solid rgba(255,255,255,0.25)',
+
+                  color: '#fff',
+
+                  fontWeight: 600,
+                  fontSize: '0.95rem',
+
+                  letterSpacing: '-0.01em',
+
+                  boxShadow:
+                    '0 10px 24px rgba(212,165,165,0.22)',
+
+                  backdropFilter: 'blur(12px)',
+
+                  transition:
+                    'background 0.35s ease, box-shadow 0.25s ease, transform 0.25s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background =
+                    'linear-gradient(135deg, rgba(195,140,140,1), rgba(176,120,120,1))';
+
+                  e.currentTarget.style.transform =
+                    'translateY(-2px)';
+
+                  e.currentTarget.style.boxShadow =
+                    '0 14px 30px rgba(195,140,140,0.34)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background =
+                    'linear-gradient(135deg, rgba(212,165,165,0.95), rgba(201,146,146,0.92))';
+
+                  e.currentTarget.style.transform =
+                    'translateY(0px)';
+
+                  e.currentTarget.style.boxShadow =
+                    '0 10px 24px rgba(212,165,165,0.22)';
+                }}
+              >
+                <span>View Resume</span>
+
+                <span
+                  style={{
+                    fontSize: '1rem',
+                    opacity: 0.9,
+                  }}
+                >
+                  ↗
+                </span>
+              </motion.a>
+
+              {/* STATS */}
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -499,31 +629,38 @@ const Hero = ({ data }) => {
                   <div
                     key={label}
                     style={{
-                      background: 'rgba(255,255,255,0.55)',
-                      backdropFilter: 'blur(12px)',
-                      border: '1px solid rgba(196,168,130,0.3)',
+                      background:
+                        'rgba(255,255,255,0.55)',
+                      border:
+                        '1px solid rgba(196,168,130,0.3)',
                       borderRadius: '12px',
-                      padding: '10px 8px',
+                      padding: '10px',
                       textAlign: 'center',
                     }}
                   >
-                    <div style={{
-                      fontFamily: "'Space Mono', monospace",
-                      fontSize: '1rem',
-                      fontWeight: '700',
-                      color: 'var(--dusty-rose)',
-                      lineHeight: 1,
-                      marginBottom: '4px',
-                    }}>
+                    <div
+                      style={{
+                        fontFamily:
+                          "'Space Mono', monospace",
+                        fontWeight: 700,
+                        fontSize: '1rem',
+                        color: 'var(--dusty-rose)',
+                        marginBottom: '4px',
+                      }}
+                    >
                       {value}
                     </div>
-                    <div style={{
-                      fontFamily: "'Space Mono', monospace",
-                      fontSize: '8px',
-                      color: 'var(--text-secondary)',
-                      letterSpacing: '0.08em',
-                      textTransform: 'uppercase',
-                    }}>
+
+                    <div
+                      style={{
+                        fontFamily:
+                          "'Space Mono', monospace",
+                        fontSize: '8px',
+                        letterSpacing: '0.08em',
+                        textTransform: 'uppercase',
+                        color: 'var(--text-secondary)',
+                      }}
+                    >
                       {label}
                     </div>
                   </div>
@@ -531,26 +668,36 @@ const Hero = ({ data }) => {
               </motion.div>
             </motion.div>
           </motion.div>
-
-          {/* ── SCROLL AFFORDANCE ── */}
-          <ScrollHint visible={showScroll} />
-
         </motion.div>
       </div>
 
-      {/* ── Responsive overrides ── */}
+      {/* RESPONSIVE */}
       <style>{`
-        @media (max-width: 1023px) {
+        html {
+          scroll-padding-top: 100px;
+        }
+
+        section {
+          scroll-margin-top: 100px;
+        }
+
+        @media (max-width: 1024px) {
           .hero-grid {
             grid-template-columns: 1fr 1fr !important;
           }
+
           .hero-grid > *:first-child {
             grid-column: 1 / -1;
           }
         }
-        @media (max-width: 767px) {
+
+        @media (max-width: 768px) {
           .hero-grid {
             grid-template-columns: 1fr !important;
+          }
+
+          .hero {
+            padding-top: 100px !important;
           }
         }
       `}</style>
