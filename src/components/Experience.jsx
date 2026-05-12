@@ -6,10 +6,13 @@ import SectionContainer from './SectionContainer';
 const Experience = ({ data }) => {
   const [expandedIndex, setExpandedIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      const width = window.innerWidth;
+      setIsMobile(width < 768);
+      setIsTablet(width >= 768 && width < 1024);
     };
 
     handleResize();
@@ -71,10 +74,10 @@ const Experience = ({ data }) => {
                 }}
                 style={{
                   position: 'absolute',
-                  left: isMobile ? '20px' : '25px',
-                  top: index === 0 ? '30px' : '0',
-                  bottom: index === (data?.experience || []).length - 1 ? '30px' : `calc(-1 * var(--gap-md))`,
-                  width: '2px',
+                  left: isMobile ? '16px' : isTablet ? '20px' : '25px',
+                  top: index === 0 ? (isMobile ? '24px' : '30px') : '0',
+                  bottom: index === (data?.experience || []).length - 1 ? (isMobile ? '24px' : '30px') : `calc(-1 * var(--gap-md))`,
+                  width: isMobile ? '1.5px' : '2px',
                   background: 'linear-gradient(180deg, var(--dusty-rose), var(--sage-green))',
                   transformOrigin: 'top'
                 }}
@@ -93,11 +96,11 @@ const Experience = ({ data }) => {
                   }
                 }}
                 style={{
-                  width: isMobile ? '40px' : '50px',
-                  height: isMobile ? '40px' : '50px',
+                  width: isMobile ? '36px' : isTablet ? '44px' : '50px',
+                  height: isMobile ? '36px' : isTablet ? '44px' : '50px',
                   borderRadius: '50%',
                   background: getCompanyColor(exp.company),
-                  border: '3px solid white',
+                  border: isMobile ? '2px solid white' : '3px solid white',
                   boxShadow: '0 6px 20px rgba(0,0,0,0.12)',
                   position: 'relative',
                   zIndex: 2,

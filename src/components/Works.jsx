@@ -62,10 +62,11 @@ const Works = ({ data }) => {
                     background: 'rgba(255,255,255,0.2)',
                     overflow: 'hidden',
                     padding: project?.image ? '0' : '8px',
-                    width: '180px',
-                    height: '100px',
+                    width: 'clamp(150px, 100%, 180px)',
+                    height: 'clamp(80px, 12vw, 100px)',
                     borderRadius: '12px',
-                    marginBottom: '12px'
+                    marginBottom: '12px',
+                    maxWidth: '100%'
                   }}
                 >
                   {project?.image ? (

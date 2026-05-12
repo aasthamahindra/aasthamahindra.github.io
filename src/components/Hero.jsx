@@ -113,7 +113,7 @@ const BlinkCursor = () => (
     transition={{
       duration: 1,
       repeat: Infinity,
-      ease: 'steps(1)',
+      ease: [0.4, 0, 0.6, 1],
     }}
     style={{
       display: 'inline-block',
@@ -684,6 +684,7 @@ const Hero = ({ data }) => {
         @media (max-width: 1024px) {
           .hero-grid {
             grid-template-columns: 1fr 1fr !important;
+            gap: 1.25rem !important;
           }
 
           .hero-grid > *:first-child {
@@ -694,10 +695,35 @@ const Hero = ({ data }) => {
         @media (max-width: 768px) {
           .hero-grid {
             grid-template-columns: 1fr !important;
+            gap: 1rem !important;
           }
 
           .hero {
             padding-top: 100px !important;
+            padding-bottom: 32px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .hero {
+            padding-top: 80px !important;
+            padding-bottom: 24px !important;
+          }
+
+          .hero-grid {
+            gap: 0.75rem !important;
+          }
+        }
+
+        @media (max-height: 600px) and (orientation: landscape) {
+          .hero {
+            padding-top: 60px !important;
+            padding-bottom: 16px !important;
+          }
+
+          .hero-grid {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 1rem !important;
           }
         }
       `}</style>

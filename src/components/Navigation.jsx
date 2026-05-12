@@ -55,8 +55,9 @@ const Navigation = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-      if (window.innerWidth >= 768) setIsMobileMenuOpen(false);
+      const width = window.innerWidth;
+      setIsMobile(width < 768);
+      if (width >= 768) setIsMobileMenuOpen(false);
     };
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -207,8 +208,10 @@ const Navigation = () => {
               backdropFilter: 'blur(20px)',
               border: '1px solid rgba(255, 255, 255, 0.2)',
               borderRadius: '16px',
-              padding: '1rem',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
+              padding: '0.75rem 1rem',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+              maxHeight: '70vh',
+              overflowY: 'auto'
             }}
           >
             {sections.map((section) => (
