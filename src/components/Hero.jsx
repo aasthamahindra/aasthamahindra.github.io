@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FiArrowUpRight } from 'react-icons/fi';
 import {
   heroVariants,
   textRevealVariants,
@@ -603,15 +604,15 @@ const Hero = ({ data }) => {
                 }}
               >
                 <span>View Resume</span>
+                <FiArrowUpRight size={16} />
 
-                <span
+                {/* <span
                   style={{
-                    fontSize: '1rem',
                     opacity: 0.9,
                   }}
                 >
-                  ↗
-                </span>
+                  <FiArrowUpRight size={16} />
+                </span> */}
               </motion.a>
 
               {/* STATS */}
