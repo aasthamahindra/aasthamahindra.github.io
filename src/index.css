@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Color Palette */
   --dusty-rose: #d4a5a5;
   --sage-green: #87a96b;
   --soft-grey: #8b8c89;
@@ -10,7 +9,6 @@
   --deep-rose: #c48a8a;
   --light-sage: #a8c09a;
   
-  /* Spacing System */
   --section-padding: 64px;
   --section-padding-mobile: 48px;
   --container-padding: clamp(16px, 4vw, 48px);
@@ -19,16 +17,13 @@
   --gap-md: clamp(1.1rem, 2.4vw, 2rem);
   --gap-lg: clamp(1.5rem, 3.2vw, 2.5rem);
   
-  /* Typography */
   --text-primary: #2c3e50;
   --text-secondary: #5a6c7d;
   --text-light: #7f8c8d;
   
-  /* Shadows */
   --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   --hover-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
   
-  /* Transitions */
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-cinematic: all 0.6s cubic-bezier(0.6, -0.05, 0.01, 0.99);
 }
@@ -214,9 +209,8 @@ body {
   scroll-margin-top: 96px;
 }
 
-/* Hero section specific overrides for viewport fit */
 .section.hero {
-  padding: 0; /* Handled by inline styles with clamp() */
+  padding: 0;
 }
 
 .card {
@@ -234,7 +228,6 @@ body {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
-/* Responsive button improvements */
 .btn {
   display: inline-block;
   padding: 12px 24px;
@@ -247,21 +240,20 @@ body {
   border: none;
   cursor: pointer;
   font-size: 16px;
-  min-height: 48px; /* Better touch target */
-  touch-action: manipulation; /* Improve touch responsiveness */
+  min-height: 48px;
+  touch-action: manipulation;
 }
 
 @media (max-width: 768px) {
   .btn {
-    font-size: 16px; /* Prevent zoom on iOS */
-    padding: 14px 28px; /* Larger touch targets */
+    font-size: 16px;
+    padding: 14px 28px;
   }
 }
 
-/* Better touch targets for mobile */
 @media (hover: none) and (pointer: coarse) {
   .btn:hover {
-    transform: none; /* Remove hover effects on touch devices */
+    transform: none;
   }
   
   .btn:active {
@@ -463,7 +455,6 @@ body {
   }
 }
 
-/* Accessibility improvements */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -476,7 +467,6 @@ body {
   border: 0;
 }
 
-/* Focus styles for better accessibility */
 .btn:focus,
 input:focus,
 textarea:focus,
@@ -485,7 +475,6 @@ button:focus {
   outline-offset: 2px;
 }
 
-/* High contrast mode support */
 @media (prefers-contrast: high) {
   :root {
     --text-primary: #000000;
@@ -494,7 +483,6 @@ button:focus {
   }
 }
 
-/* Grain/noise texture overlay */
 .grain-overlay {
   position: fixed;
   top: 0;
@@ -508,7 +496,6 @@ button:focus {
     url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* Enhanced glassmorphism */
 .glass-card {
   background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(20px) saturate(180%);
@@ -519,7 +506,6 @@ button:focus {
     inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
 }
 
-/* Full-screen sections */
 .fullscreen-section {
   min-height: auto;
   display: flex;
@@ -529,7 +515,6 @@ button:focus {
   overflow: hidden;
 }
 
-/* Asymmetric grid layouts */
 .asymmetric-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -541,7 +526,6 @@ button:focus {
 .asymmetric-grid .col-span-4 { grid-column: span 4; }
 .asymmetric-grid .col-span-3 { grid-column: span 3; }
 
-/* Overlapping elements */
 .overlap-container {
   position: relative;
 }
@@ -551,7 +535,6 @@ button:focus {
   z-index: 2;
 }
 
-/* Magnetic hover effects */
 .magnetic-button {
   position: relative;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -561,7 +544,6 @@ button:focus {
   transform: translateY(-2px);
 }
 
-/* Floating navigation */
 .floating-nav {
   position: fixed;
   top: 2rem;
@@ -582,7 +564,6 @@ button:focus {
   backdrop-filter: blur(25px);
 }
 
-/* Active section indicator */
 .nav-indicator {
   position: absolute;
   bottom: -2px;
@@ -591,7 +572,6 @@ button:focus {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Horizontal scroll container */
 .horizontal-scroll {
   display: flex;
   overflow-x: auto;
@@ -619,7 +599,6 @@ button:focus {
   scroll-snap-align: start;
 }
 
-/* Cinematic reveal transitions */
 .cinematic-reveal {
   position: relative;
   overflow: hidden;
@@ -640,7 +619,6 @@ button:focus {
   left: 100%;
 }
 
-/* Enhanced typography */
 .hero-title {
   font-size: clamp(3rem, 8vw, 6rem);
   font-weight: 700;
@@ -655,17 +633,14 @@ button:focus {
   letter-spacing: -0.01em;
 }
 
-/* Layered depth */
 .depth-layer-1 { z-index: 10; }
 .depth-layer-2 { z-index: 20; }
 .depth-layer-3 { z-index: 30; }
 
-/* Smooth transitions */
 .smooth-transition {
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Loading states */
 .loading-skeleton {
   background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 25%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.1) 75%);
   background-size: 200% 100%;
@@ -677,13 +652,11 @@ button:focus {
   100% { background-position: -200% 0; }
 }
 
-/* Enhanced focus styles */
 .focus-ring:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(212, 165, 165, 0.3);
 }
 
-/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -702,7 +675,6 @@ button:focus {
   }
 }
 
-/* Enhanced responsive improvements */
 @media (max-width: 480px) {
   .container {
     padding: 0 16px;
@@ -767,7 +739,6 @@ button:focus {
   }
 }
 
-/* Small tablets and large phones */
 @media (min-width: 481px) and (max-width: 767px) {
   .container {
     padding: 0 20px;
@@ -790,7 +761,6 @@ button:focus {
   }
 }
 
-/* Landscape orientation optimizations */
 @media (max-height: 600px) and (orientation: landscape) {
   .section.hero {
     padding-top: 80px;
@@ -807,7 +777,6 @@ button:focus {
   }
 }
 
-/* Large tablets */
 @media (min-width: 768px) and (max-width: 1023px) {
   .container {
     max-width: 960px;
@@ -836,7 +805,6 @@ button:focus {
   }
 }
 
-/* Small desktops */
 @media (min-width: 1024px) and (max-width: 1279px) {
   .container {
     max-width: 1100px;
@@ -848,7 +816,6 @@ button:focus {
   }
 }
 
-/* Ultra-wide screens */
 @media (min-width: 1440px) {
   .container {
     max-width: 1400px;
@@ -867,7 +834,6 @@ button:focus {
   }
 }
 
-/* Print styles */
 @media print {
   .floating-nav,
   .grain-overlay {
