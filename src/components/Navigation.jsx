@@ -20,9 +20,18 @@ const Navigation = () => {
   const sectionIds = sections.map(s => s.id);
 
   useEffect(() => {
-    // Scroll watcher for nav blur effect
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    // Scroll watcher for nav blur effect with throttling
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 50);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
     // IntersectionObserver for active section

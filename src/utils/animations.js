@@ -14,16 +14,16 @@ export const pageVariants = {
   visible: {
     opacity: 1,
     transition: {
-      duration: 1.2,
+      duration: 0.3,
       ease: easings.smooth,
-      staggerChildren: 0.15,
-      delayChildren: 0.2
+      staggerChildren: 0.04,
+      delayChildren: 0.05
     }
   },
   exit: {
     opacity: 0,
     transition: {
-      duration: 0.8,
+      duration: 0.2,
       ease: easings.smooth
     }
   }
@@ -33,15 +33,15 @@ export const pageVariants = {
 export const sectionVariants = {
   hidden: { 
     opacity: 0,
-    y: 80
+    y: 20
   },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 1,
+      duration: 0.25,
       ease: easings.smooth,
-      staggerChildren: 0.2
+      staggerChildren: 0.05
     }
   }
 };
@@ -50,15 +50,15 @@ export const sectionVariants = {
 export const cardVariants = {
   hidden: { 
     opacity: 0,
-    scale: 0.9,
-    y: 60
+    scale: 0.98,
+    y: 15
   },
   visible: {
     opacity: 1,
     scale: 1,
     y: 0,
     transition: {
-      duration: 0.8,
+      duration: 0.2,
       ease: easings.smooth
     }
   }
@@ -68,15 +68,15 @@ export const cardVariants = {
 export const textRevealVariants = {
   hidden: { 
     opacity: 0,
-    y: 40,
-    rotateX: -15
+    y: 10,
+    rotateX: -4
   },
   visible: {
     opacity: 1,
     y: 0,
     rotateX: 0,
     transition: {
-      duration: 0.5,
+      duration: 0.15,
       ease: easings.smooth
     }
   }
@@ -86,16 +86,16 @@ export const textRevealVariants = {
 export const heroVariants = {
   hidden: { 
     opacity: 0,
-    scale: 0.95
+    scale: 0.99
   },
   visible: {
     opacity: 1,
     scale: 1,
     transition: {
-      duration: 0.6,
+      duration: 0.15,
       ease: easings.smooth,
-      staggerChildren: 0.1,
-      delayChildren: 0.1
+      staggerChildren: 0.025,
+      delayChildren: 0.025
     }
   }
 };
@@ -106,15 +106,15 @@ export const projectCardHover = {
     scale: 1,
     rotateY: 0,
     transition: {
-      duration: 0.6,
+      duration: 0.15,
       ease: easings.smooth
     }
   },
   hover: { 
-    scale: 1.03,
-    rotateY: 5,
+    scale: 1.01,
+    rotateY: 1,
     transition: {
-      duration: 0.6,
+      duration: 0.15,
       ease: easings.smooth
     }
   }
@@ -124,15 +124,15 @@ export const projectCardHover = {
 export const timelineVariants = {
   hidden: { 
     opacity: 0,
-    x: -100
+    x: -25
   },
   visible: {
     opacity: 1,
     x: 0,
     transition: {
-      duration: 0.8,
+      duration: 0.2,
       ease: easings.smooth,
-      staggerChildren: 0.3
+      staggerChildren: 0.075
     }
   }
 };
@@ -140,14 +140,14 @@ export const timelineVariants = {
 // Navigation animations
 export const navVariants = {
   hidden: { 
-    y: -100,
+    y: -25,
     opacity: 0
   },
   visible: {
     y: 0,
     opacity: 1,
     transition: {
-      duration: 0.8,
+      duration: 0.2,
       ease: easings.smooth
     }
   }
@@ -171,13 +171,13 @@ export const parallaxValues = {
 export const backgroundVariants = {
   hidden: { 
     opacity: 0,
-    scale: 1.1
+    scale: 1.02
   },
   visible: {
     opacity: 1,
     scale: 1,
     transition: {
-      duration: 2,
+      duration: 0.5,
       ease: easings.slow
     }
   }
