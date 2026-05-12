@@ -605,14 +605,6 @@ const Hero = ({ data }) => {
               >
                 <span>View Resume</span>
                 <FiArrowUpRight size={16} />
-
-                {/* <span
-                  style={{
-                    opacity: 0.9,
-                  }}
-                >
-                  <FiArrowUpRight size={16} />
-                </span> */}
               </motion.a>
 
               {/* STATS */}
